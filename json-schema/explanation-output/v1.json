@@ -2,11 +2,12 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://aeroroute.dev/contracts/explanation-output/v1",
   "type": "object",
-  "required": ["contract_version", "provider", "text"],
+  "required": ["contract_version", "provider", "text", "fallback_used"],
   "properties": {
     "contract_version": { "const": "1.0.0" },
     "provider": { "enum": ["template", "mlx"] },
-    "text": { "type": "string", "minLength": 1 }
+    "text": { "type": "string", "minLength": 1 },
+    "fallback_used": { "type": "boolean" }
   },
   "additionalProperties": false
 }

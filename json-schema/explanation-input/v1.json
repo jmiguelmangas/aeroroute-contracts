@@ -2,10 +2,15 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://aeroroute.dev/contracts/explanation-input/v1",
   "type": "object",
-  "required": ["contract_version", "facts"],
+  "required": ["contract_version", "summary", "allowed_numeric_values"],
   "properties": {
     "contract_version": { "const": "1.0.0" },
-    "facts": { "type": "object", "additionalProperties": true }
+    "summary": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "allowed_numeric_values": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    }
   },
   "additionalProperties": false
 }

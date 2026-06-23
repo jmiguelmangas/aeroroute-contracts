@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aeroroute.dev/contracts/dataset-manifest/v1",
+  "type": "object",
+  "required": ["version", "sha256", "contract_version", "source_kind"],
+  "properties": {
+    "version": { "type": "string" },
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "contract_version": { "const": "1.0.0" },
+    "source_kind": { "enum": ["synthetic", "public"] }
+  },
+  "additionalProperties": false
+}
