@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aeroroute.dev/contracts/explanation-input/v1",
+  "type": "object",
+  "required": ["contract_version", "facts"],
+  "properties": {
+    "contract_version": { "const": "1.0.0" },
+    "facts": { "type": "object", "additionalProperties": true }
+  },
+  "additionalProperties": false
+}
