@@ -1,0 +1,37 @@
+import json
+import tempfile
+import unittest
+from pathlib import Path
+from zipfile import ZipFile
+
+from scripts.contracts import build_bundle, validate_contracts
+
+
+class ContractTests(unittest.TestCase):
+    def test_repository_contracts_are_valid(self) -> None:
+        self.assertEqual(len(validate_contracts()), 4)
+
+    def test_schema_marker_is_required(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            path = root / "json-schema" / "invalid.json"
+            path.parent.mkdir(parents=True)
+            path.write_text(json.dumps({"type": "object"}))
+            (root / "openapi").mkdir()
+
+            with self.assertRaisesRegex(ValueError, "missing \\$schema"):
+                validate_contracts(root)
+
+    def test_bundle_contains_version_and_contracts(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "contracts.zip"
+            build_bundle(output=output)
+
+            with ZipFile(output) as archive:
+                names = set(archive.namelist())
+            self.assertIn("VERSION", names)
+            self.assertIn("openapi/aeroroute-v1.json", names)
+
+
+if __name__ == "__main__":
+    unittest.main()
