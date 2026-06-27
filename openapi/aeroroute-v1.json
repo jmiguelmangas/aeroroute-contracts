@@ -1,0 +1,825 @@
+{
+  "components": {
+    "schemas": {
+      "AirportPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/AirportResponse"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "limit": {
+            "title": "Limit",
+            "type": "integer"
+          },
+          "offset": {
+            "title": "Offset",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "limit",
+          "offset"
+        ],
+        "title": "AirportPage",
+        "type": "object"
+      },
+      "AirportResponse": {
+        "properties": {
+          "iata_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Iata Code"
+          },
+          "icao_code": {
+            "title": "Icao Code",
+            "type": "string"
+          },
+          "iso_country": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Iso Country"
+          },
+          "latitude_deg": {
+            "title": "Latitude Deg",
+            "type": "number"
+          },
+          "longitude_deg": {
+            "title": "Longitude Deg",
+            "type": "number"
+          },
+          "municipality": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Municipality"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "icao_code",
+          "iata_code",
+          "name",
+          "municipality",
+          "iso_country",
+          "latitude_deg",
+          "longitude_deg"
+        ],
+        "title": "AirportResponse",
+        "type": "object"
+      },
+      "CandidateResponse": {
+        "properties": {
+          "display_geojson": {
+            "$ref": "#/components/schemas/GeoJsonGeometry"
+          },
+          "distance_m": {
+            "title": "Distance M",
+            "type": "number"
+          },
+          "fuel_kg": {
+            "title": "Fuel Kg",
+            "type": "number"
+          },
+          "geometry": {
+            "items": {
+              "$ref": "#/components/schemas/RoutePoint"
+            },
+            "title": "Geometry",
+            "type": "array"
+          },
+          "path": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Path",
+            "type": "array"
+          },
+          "score": {
+            "title": "Score",
+            "type": "number"
+          },
+          "time_s": {
+            "title": "Time S",
+            "type": "number"
+          },
+          "waypoints": {
+            "items": {
+              "$ref": "#/components/schemas/WaypointDetail"
+            },
+            "title": "Waypoints",
+            "type": "array"
+          }
+        },
+        "required": [
+          "path",
+          "geometry",
+          "distance_m",
+          "time_s",
+          "fuel_kg",
+          "score",
+          "display_geojson",
+          "waypoints"
+        ],
+        "title": "CandidateResponse",
+        "type": "object"
+      },
+      "DataQualityFlag": {
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "info",
+              "warning"
+            ],
+            "title": "Severity",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "severity",
+          "message"
+        ],
+        "title": "DataQualityFlag",
+        "type": "object"
+      },
+      "ExplanationResponse": {
+        "properties": {
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Warnings",
+            "type": "array"
+          }
+        },
+        "required": [
+          "provider",
+          "text",
+          "warnings"
+        ],
+        "title": "ExplanationResponse",
+        "type": "object"
+      },
+      "GeoJsonGeometry": {
+        "properties": {
+          "coordinates": {
+            "anyOf": [
+              {
+                "items": {
+                  "items": {
+                    "type": "number"
+                  },
+                  "type": "array"
+                },
+                "type": "array"
+              },
+              {
+                "items": {
+                  "items": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "type": "array"
+                  },
+                  "type": "array"
+                },
+                "type": "array"
+              }
+            ],
+            "title": "Coordinates"
+          },
+          "type": {
+            "enum": [
+              "LineString",
+              "MultiLineString"
+            ],
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "coordinates"
+        ],
+        "title": "GeoJsonGeometry",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "OptimizationHistoryItem": {
+        "properties": {
+          "aircraft_type": {
+            "title": "Aircraft Type",
+            "type": "string"
+          },
+          "destination_icao": {
+            "title": "Destination Icao",
+            "type": "string"
+          },
+          "origin_icao": {
+            "title": "Origin Icao",
+            "type": "string"
+          },
+          "profile": {
+            "title": "Profile",
+            "type": "string"
+          },
+          "run_id": {
+            "title": "Run Id",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "run_id",
+          "status",
+          "origin_icao",
+          "destination_icao",
+          "aircraft_type",
+          "profile"
+        ],
+        "title": "OptimizationHistoryItem",
+        "type": "object"
+      },
+      "OptimizationRequest": {
+        "properties": {
+          "aircraft_type": {
+            "enum": [
+              "A320",
+              "B738"
+            ],
+            "title": "Aircraft Type",
+            "type": "string"
+          },
+          "departure_time_utc": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Departure Time Utc"
+          },
+          "destination_icao": {
+            "maxLength": 8,
+            "minLength": 3,
+            "title": "Destination Icao",
+            "type": "string"
+          },
+          "origin_icao": {
+            "maxLength": 8,
+            "minLength": 3,
+            "title": "Origin Icao",
+            "type": "string"
+          },
+          "profile": {
+            "default": "balanced",
+            "enum": [
+              "minimum_fuel",
+              "minimum_time",
+              "balanced"
+            ],
+            "title": "Profile",
+            "type": "string"
+          }
+        },
+        "required": [
+          "origin_icao",
+          "destination_icao",
+          "aircraft_type"
+        ],
+        "title": "OptimizationRequest",
+        "type": "object"
+      },
+      "OptimizationResponse": {
+        "properties": {
+          "algorithm_version": {
+            "title": "Algorithm Version",
+            "type": "string"
+          },
+          "alternatives": {
+            "items": {
+              "$ref": "#/components/schemas/CandidateResponse"
+            },
+            "title": "Alternatives",
+            "type": "array"
+          },
+          "assumptions": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Assumptions",
+            "type": "array"
+          },
+          "baseline": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CandidateResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "data_quality": {
+            "items": {
+              "$ref": "#/components/schemas/DataQualityFlag"
+            },
+            "title": "Data Quality",
+            "type": "array"
+          },
+          "request": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/OptimizationRequest"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Id"
+          },
+          "solver_termination_reason": {
+            "title": "Solver Termination Reason",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "winner": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CandidateResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "status",
+          "algorithm_version",
+          "winner",
+          "alternatives",
+          "solver_termination_reason"
+        ],
+        "title": "OptimizationResponse",
+        "type": "object"
+      },
+      "RoutePoint": {
+        "properties": {
+          "latitude_deg": {
+            "title": "Latitude Deg",
+            "type": "number"
+          },
+          "longitude_deg": {
+            "title": "Longitude Deg",
+            "type": "number"
+          }
+        },
+        "required": [
+          "latitude_deg",
+          "longitude_deg"
+        ],
+        "title": "RoutePoint",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      },
+      "WaypointDetail": {
+        "properties": {
+          "cumulative_distance_m": {
+            "title": "Cumulative Distance M",
+            "type": "number"
+          },
+          "cumulative_fuel_kg": {
+            "title": "Cumulative Fuel Kg",
+            "type": "number"
+          },
+          "elapsed_time_s": {
+            "title": "Elapsed Time S",
+            "type": "number"
+          },
+          "estimated_mass_kg": {
+            "title": "Estimated Mass Kg",
+            "type": "number"
+          },
+          "flight_level": {
+            "title": "Flight Level",
+            "type": "integer"
+          },
+          "latitude_deg": {
+            "title": "Latitude Deg",
+            "type": "number"
+          },
+          "longitude_deg": {
+            "title": "Longitude Deg",
+            "type": "number"
+          },
+          "node_id": {
+            "title": "Node Id",
+            "type": "string"
+          },
+          "wind_component_kt": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Wind Component Kt"
+          }
+        },
+        "required": [
+          "node_id",
+          "latitude_deg",
+          "longitude_deg",
+          "flight_level",
+          "elapsed_time_s",
+          "cumulative_distance_m",
+          "cumulative_fuel_kg",
+          "estimated_mass_kg"
+        ],
+        "title": "WaypointDetail",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "AeroRoute MLX API",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/v1/airports": {
+      "get": {
+        "operationId": "search_airports_api_v1_airports_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "query",
+            "required": true,
+            "schema": {
+              "maxLength": 100,
+              "minLength": 1,
+              "title": "Query",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AirportPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Search Airports",
+        "tags": [
+          "airports"
+        ]
+      }
+    },
+    "/api/v1/optimizations": {
+      "get": {
+        "operationId": "list_optimizations_api_v1_optimizations_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/OptimizationHistoryItem"
+                  },
+                  "title": "Response List Optimizations Api V1 Optimizations Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List Optimizations",
+        "tags": [
+          "optimizations"
+        ]
+      },
+      "post": {
+        "operationId": "create_optimization_api_v1_optimizations_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OptimizationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OptimizationResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create Optimization",
+        "tags": [
+          "optimizations"
+        ]
+      }
+    },
+    "/api/v1/optimizations/{run_id}": {
+      "get": {
+        "operationId": "get_optimization_api_v1_optimizations__run_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Run Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OptimizationResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Optimization",
+        "tags": [
+          "optimizations"
+        ]
+      }
+    },
+    "/api/v1/optimizations/{run_id}/explanation": {
+      "get": {
+        "operationId": "get_explanation_api_v1_optimizations__run_id__explanation_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Run Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExplanationResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Explanation",
+        "tags": [
+          "explanations"
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Health Health Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health"
+      }
+    },
+    "/health/providers": {
+      "get": {
+        "operationId": "provider_health_health_providers_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Provider Health Health Providers Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Provider Health"
+      }
+    }
+  }
+}
