@@ -100,6 +100,16 @@
             "title": "Distance M",
             "type": "number"
           },
+          "fuel_breakdown": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FuelBreakdown"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "fuel_kg": {
             "title": "Fuel Kg",
             "type": "number"
@@ -110,6 +120,16 @@
             },
             "title": "Geometry",
             "type": "array"
+          },
+          "objective_breakdown": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ObjectiveBreakdown"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "path": {
             "items": {
@@ -200,6 +220,78 @@
         "title": "ExplanationResponse",
         "type": "object"
       },
+      "FuelBreakdown": {
+        "properties": {
+          "cruise_fuel_kg": {
+            "title": "Cruise Fuel Kg",
+            "type": "number"
+          },
+          "fixed_climb_descent_fuel_kg": {
+            "title": "Fixed Climb Descent Fuel Kg",
+            "type": "number"
+          },
+          "mass_assumption_fuel_kg": {
+            "title": "Mass Assumption Fuel Kg",
+            "type": "number"
+          },
+          "modeled_trip_fuel_kg": {
+            "title": "Modeled Trip Fuel Kg",
+            "type": "number"
+          },
+          "reserves_optimized": {
+            "default": false,
+            "title": "Reserves Optimized",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "modeled_trip_fuel_kg",
+          "cruise_fuel_kg",
+          "fixed_climb_descent_fuel_kg",
+          "mass_assumption_fuel_kg"
+        ],
+        "title": "FuelBreakdown",
+        "type": "object"
+      },
+      "FuelIterationSummary": {
+        "properties": {
+          "converged": {
+            "title": "Converged",
+            "type": "boolean"
+          },
+          "initial_mass_kg": {
+            "title": "Initial Mass Kg",
+            "type": "number"
+          },
+          "iterations": {
+            "title": "Iterations",
+            "type": "integer"
+          },
+          "trip_fuel_kg": {
+            "title": "Trip Fuel Kg",
+            "type": "number"
+          },
+          "warning_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Warning Code"
+          }
+        },
+        "required": [
+          "initial_mass_kg",
+          "trip_fuel_kg",
+          "iterations",
+          "converged"
+        ],
+        "title": "FuelIterationSummary",
+        "type": "object"
+      },
       "GeoJsonGeometry": {
         "properties": {
           "coordinates": {
@@ -255,6 +347,64 @@
           }
         },
         "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "ObjectiveBreakdown": {
+        "properties": {
+          "extension_component": {
+            "title": "Extension Component",
+            "type": "number"
+          },
+          "extension_weight": {
+            "title": "Extension Weight",
+            "type": "number"
+          },
+          "fuel_component": {
+            "title": "Fuel Component",
+            "type": "number"
+          },
+          "fuel_delta": {
+            "title": "Fuel Delta",
+            "type": "number"
+          },
+          "fuel_weight": {
+            "title": "Fuel Weight",
+            "type": "number"
+          },
+          "route_extension": {
+            "title": "Route Extension",
+            "type": "number"
+          },
+          "time_component": {
+            "title": "Time Component",
+            "type": "number"
+          },
+          "time_delta": {
+            "title": "Time Delta",
+            "type": "number"
+          },
+          "time_weight": {
+            "title": "Time Weight",
+            "type": "number"
+          },
+          "total_score": {
+            "title": "Total Score",
+            "type": "number"
+          }
+        },
+        "required": [
+          "fuel_delta",
+          "time_delta",
+          "route_extension",
+          "fuel_weight",
+          "time_weight",
+          "extension_weight",
+          "fuel_component",
+          "time_component",
+          "extension_component",
+          "total_score"
+        ],
+        "title": "ObjectiveBreakdown",
         "type": "object"
       },
       "OptimizationHistoryItem": {
@@ -384,6 +534,16 @@
             },
             "title": "Data Quality",
             "type": "array"
+          },
+          "fuel_iteration": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FuelIterationSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "request": {
             "anyOf": [
