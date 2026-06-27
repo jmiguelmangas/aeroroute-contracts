@@ -663,6 +663,11 @@
             "title": "Cumulative Fuel Kg",
             "type": "number"
           },
+          "display_name": {
+            "default": "Synthetic node",
+            "title": "Display Name",
+            "type": "string"
+          },
           "elapsed_time_s": {
             "title": "Elapsed Time S",
             "type": "number"
@@ -674,6 +679,12 @@
           "flight_level": {
             "title": "Flight Level",
             "type": "integer"
+          },
+          "kind": {
+            "const": "synthetic",
+            "default": "synthetic",
+            "title": "Kind",
+            "type": "string"
           },
           "latitude_deg": {
             "title": "Latitude Deg",
