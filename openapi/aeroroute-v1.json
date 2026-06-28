@@ -1128,6 +1128,28 @@
               }
             ],
             "title": "Snap Distance Nm"
+          },
+          "inbound_via": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Inbound Via"
+          },
+          "airway_validated": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Airway Validated"
           }
         },
         "type": "object",
