@@ -1150,6 +1150,43 @@
               }
             ],
             "title": "Airway Validated"
+          },
+          "procedure_type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "SID",
+                  "STAR"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Procedure Type"
+          },
+          "procedure_identifier": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Procedure Identifier"
+          },
+          "runway": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Runway"
           }
         },
         "type": "object",
