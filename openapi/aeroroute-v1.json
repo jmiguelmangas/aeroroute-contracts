@@ -251,6 +251,50 @@
               "default": 350,
               "title": "Flight Level"
             }
+          },
+          {
+            "name": "origin_latitude_deg",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "maximum": 90,
+              "minimum": -90,
+              "title": "Origin Latitude Deg"
+            }
+          },
+          {
+            "name": "origin_longitude_deg",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "maximum": 180,
+              "minimum": -180,
+              "title": "Origin Longitude Deg"
+            }
+          },
+          {
+            "name": "destination_latitude_deg",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "maximum": 90,
+              "minimum": -90,
+              "title": "Destination Latitude Deg"
+            }
+          },
+          {
+            "name": "destination_longitude_deg",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "maximum": 180,
+              "minimum": -180,
+              "title": "Destination Longitude Deg"
+            }
           }
         ],
         "responses": {
