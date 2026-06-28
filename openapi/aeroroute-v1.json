@@ -1037,7 +1037,12 @@
           },
           "kind": {
             "type": "string",
-            "const": "synthetic",
+            "enum": [
+              "airport",
+              "navigation_fix",
+              "oceanic_coordinate",
+              "synthetic"
+            ],
             "title": "Kind",
             "default": "synthetic"
           },
@@ -1079,6 +1084,50 @@
               }
             ],
             "title": "Wind Component Kt"
+          },
+          "navigation_source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Navigation Source"
+          },
+          "airac_cycle": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Airac Cycle"
+          },
+          "airac_region": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Airac Region"
+          },
+          "snap_distance_nm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Snap Distance Nm"
           }
         },
         "type": "object",
