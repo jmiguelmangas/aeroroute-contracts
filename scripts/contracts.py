@@ -9,9 +9,11 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def contract_files(root: Path = ROOT) -> list[Path]:
-    return sorted((root / "json-schema").rglob("*.json")) + sorted(
-        (root / "openapi").rglob("*.json")
-    )
+    candidates = [
+        *(root / "json-schema").rglob("*.json"),
+        *(root / "openapi").rglob("*.json"),
+    ]
+    return sorted(path for path in candidates if not path.name.startswith("._"))
 
 
 def validate_contracts(root: Path = ROOT) -> list[Path]:

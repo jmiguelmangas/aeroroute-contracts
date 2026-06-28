@@ -1,371 +1,4 @@
 {
-  "openapi": "3.1.0",
-  "info": {
-    "title": "AeroRoute MLX API",
-    "version": "0.1.0"
-  },
-  "paths": {
-    "/api/v1/airports": {
-      "get": {
-        "tags": [
-          "airports"
-        ],
-        "summary": "Search Airports",
-        "operationId": "search_airports_api_v1_airports_get",
-        "parameters": [
-          {
-            "name": "query",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 100,
-              "title": "Query"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "maximum": 100,
-              "minimum": 1,
-              "default": 20,
-              "title": "Limit"
-            }
-          },
-          {
-            "name": "offset",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "minimum": 0,
-              "default": 0,
-              "title": "Offset"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AirportPage"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/optimizations/{run_id}/explanation": {
-      "get": {
-        "tags": [
-          "explanations"
-        ],
-        "summary": "Get Explanation",
-        "operationId": "get_explanation_api_v1_optimizations__run_id__explanation_get",
-        "parameters": [
-          {
-            "name": "run_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Run Id"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExplanationResponse"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/optimizations": {
-      "get": {
-        "tags": [
-          "optimizations"
-        ],
-        "summary": "List Optimizations",
-        "operationId": "list_optimizations_api_v1_optimizations_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/OptimizationHistoryItem"
-                  },
-                  "type": "array",
-                  "title": "Response List Optimizations Api V1 Optimizations Get"
-                }
-              }
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "optimizations"
-        ],
-        "summary": "Create Optimization",
-        "operationId": "create_optimization_api_v1_optimizations_post",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OptimizationRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/OptimizationResponse"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/optimizations/{run_id}": {
-      "get": {
-        "tags": [
-          "optimizations"
-        ],
-        "summary": "Get Optimization",
-        "operationId": "get_optimization_api_v1_optimizations__run_id__get",
-        "parameters": [
-          {
-            "name": "run_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid",
-              "title": "Run Id"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/OptimizationResponse"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/v1/weather/wind-field": {
-      "get": {
-        "tags": [
-          "weather"
-        ],
-        "summary": "Get Wind Field",
-        "operationId": "get_wind_field_api_v1_weather_wind_field_get",
-        "parameters": [
-          {
-            "name": "at_utc",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "date-time",
-              "title": "At Utc"
-            }
-          },
-          {
-            "name": "flight_level",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer",
-              "maximum": 410,
-              "minimum": 300,
-              "default": 350,
-              "title": "Flight Level"
-            }
-          },
-          {
-            "name": "origin_latitude_deg",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "number",
-              "maximum": 90,
-              "minimum": -90,
-              "title": "Origin Latitude Deg"
-            }
-          },
-          {
-            "name": "origin_longitude_deg",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "number",
-              "maximum": 180,
-              "minimum": -180,
-              "title": "Origin Longitude Deg"
-            }
-          },
-          {
-            "name": "destination_latitude_deg",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "number",
-              "maximum": 90,
-              "minimum": -90,
-              "title": "Destination Latitude Deg"
-            }
-          },
-          {
-            "name": "destination_longitude_deg",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "number",
-              "maximum": 180,
-              "minimum": -180,
-              "title": "Destination Longitude Deg"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/WindFieldResponse"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/health": {
-      "get": {
-        "summary": "Health",
-        "operationId": "health_health_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": {
-                    "type": "string"
-                  },
-                  "type": "object",
-                  "title": "Response Health Health Get"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/health/providers": {
-      "get": {
-        "summary": "Provider Health",
-        "operationId": "provider_health_health_providers_get",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "additionalProperties": {
-                    "type": "string"
-                  },
-                  "type": "object",
-                  "title": "Response Provider Health Health Providers Get"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
   "components": {
     "schemas": {
       "AirportPage": {
@@ -374,32 +7,28 @@
             "items": {
               "$ref": "#/components/schemas/AirportResponse"
             },
-            "type": "array",
-            "title": "Items"
+            "title": "Items",
+            "type": "array"
           },
           "limit": {
-            "type": "integer",
-            "title": "Limit"
+            "title": "Limit",
+            "type": "integer"
           },
           "offset": {
-            "type": "integer",
-            "title": "Offset"
+            "title": "Offset",
+            "type": "integer"
           }
         },
-        "type": "object",
         "required": [
           "items",
           "limit",
           "offset"
         ],
-        "title": "AirportPage"
+        "title": "AirportPage",
+        "type": "object"
       },
       "AirportResponse": {
         "properties": {
-          "icao_code": {
-            "type": "string",
-            "title": "Icao Code"
-          },
           "iata_code": {
             "anyOf": [
               {
@@ -411,20 +40,9 @@
             ],
             "title": "Iata Code"
           },
-          "name": {
-            "type": "string",
-            "title": "Name"
-          },
-          "municipality": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Municipality"
+          "icao_code": {
+            "title": "Icao Code",
+            "type": "string"
           },
           "iso_country": {
             "anyOf": [
@@ -438,15 +56,29 @@
             "title": "Iso Country"
           },
           "latitude_deg": {
-            "type": "number",
-            "title": "Latitude Deg"
+            "title": "Latitude Deg",
+            "type": "number"
           },
           "longitude_deg": {
-            "type": "number",
-            "title": "Longitude Deg"
+            "title": "Longitude Deg",
+            "type": "number"
+          },
+          "municipality": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Municipality"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
           }
         },
-        "type": "object",
         "required": [
           "icao_code",
           "iata_code",
@@ -456,49 +88,17 @@
           "latitude_deg",
           "longitude_deg"
         ],
-        "title": "AirportResponse"
+        "title": "AirportResponse",
+        "type": "object"
       },
       "CandidateResponse": {
         "properties": {
-          "path": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array",
-            "title": "Path"
-          },
-          "geometry": {
-            "items": {
-              "$ref": "#/components/schemas/RoutePoint"
-            },
-            "type": "array",
-            "title": "Geometry"
-          },
-          "distance_m": {
-            "type": "number",
-            "title": "Distance M"
-          },
-          "time_s": {
-            "type": "number",
-            "title": "Time S"
-          },
-          "fuel_kg": {
-            "type": "number",
-            "title": "Fuel Kg"
-          },
-          "score": {
-            "type": "number",
-            "title": "Score"
-          },
           "display_geojson": {
             "$ref": "#/components/schemas/GeoJsonGeometry"
           },
-          "waypoints": {
-            "items": {
-              "$ref": "#/components/schemas/WaypointDetail"
-            },
-            "type": "array",
-            "title": "Waypoints"
+          "distance_m": {
+            "title": "Distance M",
+            "type": "number"
           },
           "fuel_breakdown": {
             "anyOf": [
@@ -510,6 +110,17 @@
               }
             ]
           },
+          "fuel_kg": {
+            "title": "Fuel Kg",
+            "type": "number"
+          },
+          "geometry": {
+            "items": {
+              "$ref": "#/components/schemas/RoutePoint"
+            },
+            "title": "Geometry",
+            "type": "array"
+          },
           "objective_breakdown": {
             "anyOf": [
               {
@@ -519,9 +130,30 @@
                 "type": "null"
               }
             ]
+          },
+          "path": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Path",
+            "type": "array"
+          },
+          "score": {
+            "title": "Score",
+            "type": "number"
+          },
+          "time_s": {
+            "title": "Time S",
+            "type": "number"
+          },
+          "waypoints": {
+            "items": {
+              "$ref": "#/components/schemas/WaypointDetail"
+            },
+            "title": "Waypoints",
+            "type": "array"
           }
         },
-        "type": "object",
         "required": [
           "path",
           "geometry",
@@ -532,111 +164,112 @@
           "display_geojson",
           "waypoints"
         ],
-        "title": "CandidateResponse"
+        "title": "CandidateResponse",
+        "type": "object"
       },
       "DataQualityFlag": {
         "properties": {
           "code": {
-            "type": "string",
-            "title": "Code"
+            "title": "Code",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
           },
           "severity": {
-            "type": "string",
             "enum": [
               "info",
               "warning"
             ],
-            "title": "Severity"
-          },
-          "message": {
-            "type": "string",
-            "title": "Message"
+            "title": "Severity",
+            "type": "string"
           }
         },
-        "type": "object",
         "required": [
           "code",
           "severity",
           "message"
         ],
-        "title": "DataQualityFlag"
+        "title": "DataQualityFlag",
+        "type": "object"
       },
       "ExplanationResponse": {
         "properties": {
           "provider": {
-            "type": "string",
-            "title": "Provider"
+            "title": "Provider",
+            "type": "string"
           },
           "text": {
-            "type": "string",
-            "title": "Text"
+            "title": "Text",
+            "type": "string"
           },
           "warnings": {
             "items": {
               "type": "string"
             },
-            "type": "array",
-            "title": "Warnings"
+            "title": "Warnings",
+            "type": "array"
           }
         },
-        "type": "object",
         "required": [
           "provider",
           "text",
           "warnings"
         ],
-        "title": "ExplanationResponse"
+        "title": "ExplanationResponse",
+        "type": "object"
       },
       "FuelBreakdown": {
         "properties": {
-          "modeled_trip_fuel_kg": {
-            "type": "number",
-            "title": "Modeled Trip Fuel Kg"
-          },
           "cruise_fuel_kg": {
-            "type": "number",
-            "title": "Cruise Fuel Kg"
+            "title": "Cruise Fuel Kg",
+            "type": "number"
           },
           "fixed_climb_descent_fuel_kg": {
-            "type": "number",
-            "title": "Fixed Climb Descent Fuel Kg"
+            "title": "Fixed Climb Descent Fuel Kg",
+            "type": "number"
           },
           "mass_assumption_fuel_kg": {
-            "type": "number",
-            "title": "Mass Assumption Fuel Kg"
+            "title": "Mass Assumption Fuel Kg",
+            "type": "number"
+          },
+          "modeled_trip_fuel_kg": {
+            "title": "Modeled Trip Fuel Kg",
+            "type": "number"
           },
           "reserves_optimized": {
-            "type": "boolean",
+            "default": false,
             "title": "Reserves Optimized",
-            "default": false
+            "type": "boolean"
           }
         },
-        "type": "object",
         "required": [
           "modeled_trip_fuel_kg",
           "cruise_fuel_kg",
           "fixed_climb_descent_fuel_kg",
           "mass_assumption_fuel_kg"
         ],
-        "title": "FuelBreakdown"
+        "title": "FuelBreakdown",
+        "type": "object"
       },
       "FuelIterationSummary": {
         "properties": {
-          "initial_mass_kg": {
-            "type": "number",
-            "title": "Initial Mass Kg"
+          "converged": {
+            "title": "Converged",
+            "type": "boolean"
           },
-          "trip_fuel_kg": {
-            "type": "number",
-            "title": "Trip Fuel Kg"
+          "initial_mass_kg": {
+            "title": "Initial Mass Kg",
+            "type": "number"
           },
           "iterations": {
-            "type": "integer",
-            "title": "Iterations"
+            "title": "Iterations",
+            "type": "integer"
           },
-          "converged": {
-            "type": "boolean",
-            "title": "Converged"
+          "trip_fuel_kg": {
+            "title": "Trip Fuel Kg",
+            "type": "number"
           },
           "warning_code": {
             "anyOf": [
@@ -650,25 +283,17 @@
             "title": "Warning Code"
           }
         },
-        "type": "object",
         "required": [
           "initial_mass_kg",
           "trip_fuel_kg",
           "iterations",
           "converged"
         ],
-        "title": "FuelIterationSummary"
+        "title": "FuelIterationSummary",
+        "type": "object"
       },
       "GeoJsonGeometry": {
         "properties": {
-          "type": {
-            "type": "string",
-            "enum": [
-              "LineString",
-              "MultiLineString"
-            ],
-            "title": "Type"
-          },
           "coordinates": {
             "anyOf": [
               {
@@ -694,14 +319,22 @@
               }
             ],
             "title": "Coordinates"
+          },
+          "type": {
+            "enum": [
+              "LineString",
+              "MultiLineString"
+            ],
+            "title": "Type",
+            "type": "string"
           }
         },
-        "type": "object",
         "required": [
           "type",
           "coordinates"
         ],
-        "title": "GeoJsonGeometry"
+        "title": "GeoJsonGeometry",
+        "type": "object"
       },
       "HTTPValidationError": {
         "properties": {
@@ -709,57 +342,56 @@
             "items": {
               "$ref": "#/components/schemas/ValidationError"
             },
-            "type": "array",
-            "title": "Detail"
+            "title": "Detail",
+            "type": "array"
           }
         },
-        "type": "object",
-        "title": "HTTPValidationError"
+        "title": "HTTPValidationError",
+        "type": "object"
       },
       "ObjectiveBreakdown": {
         "properties": {
-          "fuel_delta": {
-            "type": "number",
-            "title": "Fuel Delta"
-          },
-          "time_delta": {
-            "type": "number",
-            "title": "Time Delta"
-          },
-          "route_extension": {
-            "type": "number",
-            "title": "Route Extension"
-          },
-          "fuel_weight": {
-            "type": "number",
-            "title": "Fuel Weight"
-          },
-          "time_weight": {
-            "type": "number",
-            "title": "Time Weight"
+          "extension_component": {
+            "title": "Extension Component",
+            "type": "number"
           },
           "extension_weight": {
-            "type": "number",
-            "title": "Extension Weight"
+            "title": "Extension Weight",
+            "type": "number"
           },
           "fuel_component": {
-            "type": "number",
-            "title": "Fuel Component"
+            "title": "Fuel Component",
+            "type": "number"
+          },
+          "fuel_delta": {
+            "title": "Fuel Delta",
+            "type": "number"
+          },
+          "fuel_weight": {
+            "title": "Fuel Weight",
+            "type": "number"
+          },
+          "route_extension": {
+            "title": "Route Extension",
+            "type": "number"
           },
           "time_component": {
-            "type": "number",
-            "title": "Time Component"
+            "title": "Time Component",
+            "type": "number"
           },
-          "extension_component": {
-            "type": "number",
-            "title": "Extension Component"
+          "time_delta": {
+            "title": "Time Delta",
+            "type": "number"
+          },
+          "time_weight": {
+            "title": "Time Weight",
+            "type": "number"
           },
           "total_score": {
-            "type": "number",
-            "title": "Total Score"
+            "title": "Total Score",
+            "type": "number"
           }
         },
-        "type": "object",
         "required": [
           "fuel_delta",
           "time_delta",
@@ -772,36 +404,36 @@
           "extension_component",
           "total_score"
         ],
-        "title": "ObjectiveBreakdown"
+        "title": "ObjectiveBreakdown",
+        "type": "object"
       },
       "OptimizationHistoryItem": {
         "properties": {
-          "run_id": {
-            "type": "string",
-            "title": "Run Id"
-          },
-          "status": {
-            "type": "string",
-            "title": "Status"
-          },
-          "origin_icao": {
-            "type": "string",
-            "title": "Origin Icao"
+          "aircraft_type": {
+            "title": "Aircraft Type",
+            "type": "string"
           },
           "destination_icao": {
-            "type": "string",
-            "title": "Destination Icao"
+            "title": "Destination Icao",
+            "type": "string"
           },
-          "aircraft_type": {
-            "type": "string",
-            "title": "Aircraft Type"
+          "origin_icao": {
+            "title": "Origin Icao",
+            "type": "string"
           },
           "profile": {
-            "type": "string",
-            "title": "Profile"
+            "title": "Profile",
+            "type": "string"
+          },
+          "run_id": {
+            "title": "Run Id",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
           }
         },
-        "type": "object",
         "required": [
           "run_id",
           "status",
@@ -810,36 +442,12 @@
           "aircraft_type",
           "profile"
         ],
-        "title": "OptimizationHistoryItem"
+        "title": "OptimizationHistoryItem",
+        "type": "object"
       },
       "OptimizationRequest": {
         "properties": {
-          "origin_icao": {
-            "type": "string",
-            "maxLength": 8,
-            "minLength": 3,
-            "title": "Origin Icao"
-          },
-          "destination_icao": {
-            "type": "string",
-            "maxLength": 8,
-            "minLength": 3,
-            "title": "Destination Icao"
-          },
-          "departure_time_utc": {
-            "anyOf": [
-              {
-                "type": "string",
-                "format": "date-time"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Departure Time Utc"
-          },
           "aircraft_type": {
-            "type": "string",
             "enum": [
               "A320",
               "B738",
@@ -848,68 +456,97 @@
               "A359",
               "A388"
             ],
-            "title": "Aircraft Type"
+            "title": "Aircraft Type",
+            "type": "string"
           },
-          "profile": {
-            "type": "string",
-            "enum": [
-              "minimum_fuel",
-              "minimum_time",
-              "balanced"
-            ],
-            "title": "Profile",
-            "default": "balanced"
-          }
-        },
-        "type": "object",
-        "required": [
-          "origin_icao",
-          "destination_icao",
-          "aircraft_type"
-        ],
-        "title": "OptimizationRequest"
-      },
-      "OptimizationResponse": {
-        "properties": {
-          "run_id": {
+          "arrival_runway": {
             "anyOf": [
               {
+                "maxLength": 8,
+                "minLength": 2,
                 "type": "string"
               },
               {
                 "type": "null"
               }
             ],
-            "title": "Run Id"
+            "title": "Arrival Runway"
           },
-          "status": {
-            "type": "string",
-            "title": "Status"
-          },
-          "algorithm_version": {
-            "type": "string",
-            "title": "Algorithm Version"
-          },
-          "winner": {
+          "departure_runway": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/CandidateResponse"
+                "maxLength": 8,
+                "minLength": 2,
+                "type": "string"
               },
               {
                 "type": "null"
               }
-            ]
+            ],
+            "title": "Departure Runway"
+          },
+          "departure_time_utc": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Departure Time Utc"
+          },
+          "destination_icao": {
+            "maxLength": 8,
+            "minLength": 3,
+            "title": "Destination Icao",
+            "type": "string"
+          },
+          "origin_icao": {
+            "maxLength": 8,
+            "minLength": 3,
+            "title": "Origin Icao",
+            "type": "string"
+          },
+          "profile": {
+            "default": "balanced",
+            "enum": [
+              "minimum_fuel",
+              "minimum_time",
+              "balanced"
+            ],
+            "title": "Profile",
+            "type": "string"
+          }
+        },
+        "required": [
+          "origin_icao",
+          "destination_icao",
+          "aircraft_type"
+        ],
+        "title": "OptimizationRequest",
+        "type": "object"
+      },
+      "OptimizationResponse": {
+        "properties": {
+          "algorithm_version": {
+            "title": "Algorithm Version",
+            "type": "string"
           },
           "alternatives": {
             "items": {
               "$ref": "#/components/schemas/CandidateResponse"
             },
-            "type": "array",
-            "title": "Alternatives"
+            "title": "Alternatives",
+            "type": "array"
           },
-          "solver_termination_reason": {
-            "type": "string",
-            "title": "Solver Termination Reason"
+          "assumptions": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Assumptions",
+            "type": "array"
           },
           "baseline": {
             "anyOf": [
@@ -921,19 +558,22 @@
               }
             ]
           },
-          "assumptions": {
-            "items": {
-              "type": "string"
-            },
-            "type": "array",
-            "title": "Assumptions"
-          },
           "data_quality": {
             "items": {
               "$ref": "#/components/schemas/DataQualityFlag"
             },
-            "type": "array",
-            "title": "Data Quality"
+            "title": "Data Quality",
+            "type": "array"
+          },
+          "fuel_iteration": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FuelIterationSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "request": {
             "anyOf": [
@@ -945,10 +585,39 @@
               }
             ]
           },
-          "fuel_iteration": {
+          "run_id": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/FuelIterationSummary"
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Run Id"
+          },
+          "solver_termination_reason": {
+            "title": "Solver Termination Reason",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "terminal_selection": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TerminalSelection"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "winner": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CandidateResponse"
               },
               {
                 "type": "null"
@@ -956,7 +625,6 @@
             ]
           }
         },
-        "type": "object",
         "required": [
           "status",
           "algorithm_version",
@@ -964,28 +632,377 @@
           "alternatives",
           "solver_termination_reason"
         ],
-        "title": "OptimizationResponse"
+        "title": "OptimizationResponse",
+        "type": "object"
+      },
+      "ProcedureOption": {
+        "properties": {
+          "airac_cycle": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Airac Cycle"
+          },
+          "entry_fix": {
+            "title": "Entry Fix",
+            "type": "string"
+          },
+          "exit_fix": {
+            "title": "Exit Fix",
+            "type": "string"
+          },
+          "identifier": {
+            "title": "Identifier",
+            "type": "string"
+          },
+          "point_count": {
+            "title": "Point Count",
+            "type": "integer"
+          },
+          "procedure_type": {
+            "enum": [
+              "SID",
+              "STAR"
+            ],
+            "title": "Procedure Type",
+            "type": "string"
+          },
+          "runway_family": {
+            "title": "Runway Family",
+            "type": "string"
+          }
+        },
+        "required": [
+          "identifier",
+          "procedure_type",
+          "runway_family",
+          "entry_fix",
+          "exit_fix",
+          "point_count"
+        ],
+        "title": "ProcedureOption",
+        "type": "object"
+      },
+      "ProcedureOptionsResponse": {
+        "properties": {
+          "airport_icao": {
+            "title": "Airport Icao",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ProcedureOption"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "procedure_type": {
+            "enum": [
+              "SID",
+              "STAR"
+            ],
+            "title": "Procedure Type",
+            "type": "string"
+          },
+          "runway": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Runway"
+          }
+        },
+        "required": [
+          "airport_icao",
+          "procedure_type",
+          "items"
+        ],
+        "title": "ProcedureOptionsResponse",
+        "type": "object"
       },
       "RoutePoint": {
         "properties": {
           "latitude_deg": {
-            "type": "number",
-            "title": "Latitude Deg"
+            "title": "Latitude Deg",
+            "type": "number"
           },
           "longitude_deg": {
-            "type": "number",
-            "title": "Longitude Deg"
+            "title": "Longitude Deg",
+            "type": "number"
           }
         },
-        "type": "object",
         "required": [
           "latitude_deg",
           "longitude_deg"
         ],
-        "title": "RoutePoint"
+        "title": "RoutePoint",
+        "type": "object"
+      },
+      "RunwayOption": {
+        "properties": {
+          "bearing_deg": {
+            "title": "Bearing Deg",
+            "type": "number"
+          },
+          "compatible_procedures": {
+            "default": 0,
+            "title": "Compatible Procedures",
+            "type": "integer"
+          },
+          "crosswind_component_kt": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Crosswind Component Kt"
+          },
+          "headwind_component_kt": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Headwind Component Kt"
+          },
+          "identifier": {
+            "title": "Identifier",
+            "type": "string"
+          },
+          "length_ft": {
+            "title": "Length Ft",
+            "type": "number"
+          },
+          "suggested": {
+            "default": false,
+            "title": "Suggested",
+            "type": "boolean"
+          },
+          "surface": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Surface"
+          },
+          "width_ft": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Width Ft"
+          }
+        },
+        "required": [
+          "identifier",
+          "bearing_deg",
+          "length_ft"
+        ],
+        "title": "RunwayOption",
+        "type": "object"
+      },
+      "RunwayOptionsResponse": {
+        "properties": {
+          "airac_cycle": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Airac Cycle"
+          },
+          "airport_icao": {
+            "title": "Airport Icao",
+            "type": "string"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/RunwayOption"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "procedure_type": {
+            "enum": [
+              "SID",
+              "STAR"
+            ],
+            "title": "Procedure Type",
+            "type": "string"
+          },
+          "recommendation_basis": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Recommendation Basis",
+            "type": "array"
+          },
+          "suggested_runway": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Suggested Runway"
+          },
+          "surface_wind_direction_deg": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Surface Wind Direction Deg"
+          },
+          "surface_wind_source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Surface Wind Source"
+          },
+          "surface_wind_speed_kt": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Surface Wind Speed Kt"
+          }
+        },
+        "required": [
+          "airport_icao",
+          "procedure_type",
+          "items"
+        ],
+        "title": "RunwayOptionsResponse",
+        "type": "object"
+      },
+      "TerminalSelection": {
+        "properties": {
+          "airac_cycle": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Airac Cycle"
+          },
+          "arrival_runway": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Arrival Runway"
+          },
+          "arrival_runway_suggested": {
+            "default": false,
+            "title": "Arrival Runway Suggested",
+            "type": "boolean"
+          },
+          "departure_runway": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Departure Runway"
+          },
+          "departure_runway_suggested": {
+            "default": false,
+            "title": "Departure Runway Suggested",
+            "type": "boolean"
+          },
+          "rationale": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Rationale",
+            "type": "array"
+          },
+          "sid_identifier": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sid Identifier"
+          },
+          "star_identifier": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Star Identifier"
+          }
+        },
+        "title": "TerminalSelection",
+        "type": "object"
       },
       "ValidationError": {
         "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
           "loc": {
             "items": {
               "anyOf": [
@@ -997,105 +1014,28 @@
                 }
               ]
             },
-            "type": "array",
-            "title": "Location"
+            "title": "Location",
+            "type": "array"
           },
           "msg": {
-            "type": "string",
-            "title": "Message"
+            "title": "Message",
+            "type": "string"
           },
           "type": {
-            "type": "string",
-            "title": "Error Type"
-          },
-          "input": {
-            "title": "Input"
-          },
-          "ctx": {
-            "type": "object",
-            "title": "Context"
+            "title": "Error Type",
+            "type": "string"
           }
         },
-        "type": "object",
         "required": [
           "loc",
           "msg",
           "type"
         ],
-        "title": "ValidationError"
+        "title": "ValidationError",
+        "type": "object"
       },
       "WaypointDetail": {
         "properties": {
-          "node_id": {
-            "type": "string",
-            "title": "Node Id"
-          },
-          "display_name": {
-            "type": "string",
-            "title": "Display Name",
-            "default": "Synthetic node"
-          },
-          "kind": {
-            "type": "string",
-            "enum": [
-              "airport",
-              "navigation_fix",
-              "oceanic_coordinate",
-              "synthetic"
-            ],
-            "title": "Kind",
-            "default": "synthetic"
-          },
-          "latitude_deg": {
-            "type": "number",
-            "title": "Latitude Deg"
-          },
-          "longitude_deg": {
-            "type": "number",
-            "title": "Longitude Deg"
-          },
-          "flight_level": {
-            "type": "integer",
-            "title": "Flight Level"
-          },
-          "elapsed_time_s": {
-            "type": "number",
-            "title": "Elapsed Time S"
-          },
-          "cumulative_distance_m": {
-            "type": "number",
-            "title": "Cumulative Distance M"
-          },
-          "cumulative_fuel_kg": {
-            "type": "number",
-            "title": "Cumulative Fuel Kg"
-          },
-          "estimated_mass_kg": {
-            "type": "number",
-            "title": "Estimated Mass Kg"
-          },
-          "wind_component_kt": {
-            "anyOf": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Wind Component Kt"
-          },
-          "navigation_source": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Navigation Source"
-          },
           "airac_cycle": {
             "anyOf": [
               {
@@ -1118,16 +1058,41 @@
             ],
             "title": "Airac Region"
           },
-          "snap_distance_nm": {
+          "airway_validated": {
             "anyOf": [
               {
-                "type": "number"
+                "type": "boolean"
               },
               {
                 "type": "null"
               }
             ],
-            "title": "Snap Distance Nm"
+            "title": "Airway Validated"
+          },
+          "cumulative_distance_m": {
+            "title": "Cumulative Distance M",
+            "type": "number"
+          },
+          "cumulative_fuel_kg": {
+            "title": "Cumulative Fuel Kg",
+            "type": "number"
+          },
+          "display_name": {
+            "default": "Synthetic node",
+            "title": "Display Name",
+            "type": "string"
+          },
+          "elapsed_time_s": {
+            "title": "Elapsed Time S",
+            "type": "number"
+          },
+          "estimated_mass_kg": {
+            "title": "Estimated Mass Kg",
+            "type": "number"
+          },
+          "flight_level": {
+            "title": "Flight Level",
+            "type": "integer"
           },
           "inbound_via": {
             "anyOf": [
@@ -1140,31 +1105,39 @@
             ],
             "title": "Inbound Via"
           },
-          "airway_validated": {
-            "anyOf": [
-              {
-                "type": "boolean"
-              },
-              {
-                "type": "null"
-              }
+          "kind": {
+            "default": "synthetic",
+            "enum": [
+              "airport",
+              "navigation_fix",
+              "oceanic_coordinate",
+              "synthetic"
             ],
-            "title": "Airway Validated"
+            "title": "Kind",
+            "type": "string"
           },
-          "procedure_type": {
+          "latitude_deg": {
+            "title": "Latitude Deg",
+            "type": "number"
+          },
+          "longitude_deg": {
+            "title": "Longitude Deg",
+            "type": "number"
+          },
+          "navigation_source": {
             "anyOf": [
               {
-                "type": "string",
-                "enum": [
-                  "SID",
-                  "STAR"
-                ]
+                "type": "string"
               },
               {
                 "type": "null"
               }
             ],
-            "title": "Procedure Type"
+            "title": "Navigation Source"
+          },
+          "node_id": {
+            "title": "Node Id",
+            "type": "string"
           },
           "procedure_identifier": {
             "anyOf": [
@@ -1177,6 +1150,21 @@
             ],
             "title": "Procedure Identifier"
           },
+          "procedure_type": {
+            "anyOf": [
+              {
+                "enum": [
+                  "SID",
+                  "STAR"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Procedure Type"
+          },
           "runway": {
             "anyOf": [
               {
@@ -1187,9 +1175,30 @@
               }
             ],
             "title": "Runway"
+          },
+          "snap_distance_nm": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Snap Distance Nm"
+          },
+          "wind_component_kt": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Wind Component Kt"
           }
         },
-        "type": "object",
         "required": [
           "node_id",
           "latitude_deg",
@@ -1200,36 +1209,36 @@
           "cumulative_fuel_kg",
           "estimated_mass_kg"
         ],
-        "title": "WaypointDetail"
+        "title": "WaypointDetail",
+        "type": "object"
       },
       "WindFieldResponse": {
         "properties": {
-          "valid_at_utc": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Valid At Utc"
-          },
           "flight_level": {
-            "type": "integer",
-            "title": "Flight Level"
+            "title": "Flight Level",
+            "type": "integer"
           },
           "pressure_hpa": {
-            "type": "integer",
-            "title": "Pressure Hpa"
-          },
-          "source": {
-            "type": "string",
-            "title": "Source"
+            "title": "Pressure Hpa",
+            "type": "integer"
           },
           "samples": {
             "items": {
               "$ref": "#/components/schemas/WindFieldSample"
             },
-            "type": "array",
-            "title": "Samples"
+            "title": "Samples",
+            "type": "array"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "valid_at_utc": {
+            "format": "date-time",
+            "title": "Valid At Utc",
+            "type": "string"
           }
         },
-        "type": "object",
         "required": [
           "valid_at_utc",
           "flight_level",
@@ -1237,36 +1246,36 @@
           "source",
           "samples"
         ],
-        "title": "WindFieldResponse"
+        "title": "WindFieldResponse",
+        "type": "object"
       },
       "WindFieldSample": {
         "properties": {
-          "latitude_deg": {
-            "type": "number",
-            "title": "Latitude Deg"
-          },
-          "longitude_deg": {
-            "type": "number",
-            "title": "Longitude Deg"
+          "direction_deg": {
+            "title": "Direction Deg",
+            "type": "number"
           },
           "east_kt": {
-            "type": "number",
-            "title": "East Kt"
+            "title": "East Kt",
+            "type": "number"
+          },
+          "latitude_deg": {
+            "title": "Latitude Deg",
+            "type": "number"
+          },
+          "longitude_deg": {
+            "title": "Longitude Deg",
+            "type": "number"
           },
           "north_kt": {
-            "type": "number",
-            "title": "North Kt"
+            "title": "North Kt",
+            "type": "number"
           },
           "speed_kt": {
-            "type": "number",
-            "title": "Speed Kt"
-          },
-          "direction_deg": {
-            "type": "number",
-            "title": "Direction Deg"
+            "title": "Speed Kt",
+            "type": "number"
           }
         },
-        "type": "object",
         "required": [
           "latitude_deg",
           "longitude_deg",
@@ -1275,7 +1284,518 @@
           "speed_kt",
           "direction_deg"
         ],
-        "title": "WindFieldSample"
+        "title": "WindFieldSample",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "title": "AeroRoute MLX API",
+    "version": "0.2.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/api/v1/airports": {
+      "get": {
+        "operationId": "search_airports_api_v1_airports_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "query",
+            "required": true,
+            "schema": {
+              "maxLength": 100,
+              "minLength": 1,
+              "title": "Query",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "schema": {
+              "default": 0,
+              "minimum": 0,
+              "title": "Offset",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AirportPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Search Airports",
+        "tags": [
+          "airports"
+        ]
+      }
+    },
+    "/api/v1/airports/{icao}/procedures": {
+      "get": {
+        "operationId": "list_procedures_api_v1_airports__icao__procedures_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "icao",
+            "required": true,
+            "schema": {
+              "title": "Icao",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "type",
+            "required": true,
+            "schema": {
+              "enum": [
+                "SID",
+                "STAR"
+              ],
+              "title": "Type",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "runway",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Runway"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProcedureOptionsResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Procedures",
+        "tags": [
+          "navigation"
+        ]
+      }
+    },
+    "/api/v1/airports/{icao}/runways": {
+      "get": {
+        "operationId": "list_runways_api_v1_airports__icao__runways_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "icao",
+            "required": true,
+            "schema": {
+              "title": "Icao",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "procedure_type",
+            "required": true,
+            "schema": {
+              "enum": [
+                "SID",
+                "STAR"
+              ],
+              "title": "Procedure Type",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "at_utc",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "At Utc"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunwayOptionsResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Runways",
+        "tags": [
+          "navigation"
+        ]
+      }
+    },
+    "/api/v1/optimizations": {
+      "get": {
+        "operationId": "list_optimizations_api_v1_optimizations_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/OptimizationHistoryItem"
+                  },
+                  "title": "Response List Optimizations Api V1 Optimizations Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List Optimizations",
+        "tags": [
+          "optimizations"
+        ]
+      },
+      "post": {
+        "operationId": "create_optimization_api_v1_optimizations_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OptimizationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OptimizationResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create Optimization",
+        "tags": [
+          "optimizations"
+        ]
+      }
+    },
+    "/api/v1/optimizations/{run_id}": {
+      "get": {
+        "operationId": "get_optimization_api_v1_optimizations__run_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Run Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OptimizationResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Optimization",
+        "tags": [
+          "optimizations"
+        ]
+      }
+    },
+    "/api/v1/optimizations/{run_id}/explanation": {
+      "get": {
+        "operationId": "get_explanation_api_v1_optimizations__run_id__explanation_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Run Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExplanationResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Explanation",
+        "tags": [
+          "explanations"
+        ]
+      }
+    },
+    "/api/v1/weather/wind-field": {
+      "get": {
+        "operationId": "get_wind_field_api_v1_weather_wind_field_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "at_utc",
+            "required": true,
+            "schema": {
+              "format": "date-time",
+              "title": "At Utc",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "flight_level",
+            "required": false,
+            "schema": {
+              "default": 350,
+              "maximum": 410,
+              "minimum": 300,
+              "title": "Flight Level",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "origin_latitude_deg",
+            "required": true,
+            "schema": {
+              "maximum": 90,
+              "minimum": -90,
+              "title": "Origin Latitude Deg",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "origin_longitude_deg",
+            "required": true,
+            "schema": {
+              "maximum": 180,
+              "minimum": -180,
+              "title": "Origin Longitude Deg",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "destination_latitude_deg",
+            "required": true,
+            "schema": {
+              "maximum": 90,
+              "minimum": -90,
+              "title": "Destination Latitude Deg",
+              "type": "number"
+            }
+          },
+          {
+            "in": "query",
+            "name": "destination_longitude_deg",
+            "required": true,
+            "schema": {
+              "maximum": 180,
+              "minimum": -180,
+              "title": "Destination Longitude Deg",
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WindFieldResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Wind Field",
+        "tags": [
+          "weather"
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Health Health Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health"
+      }
+    },
+    "/health/providers": {
+      "get": {
+        "operationId": "provider_health_health_providers_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Provider Health Health Providers Get",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Provider Health"
       }
     }
   }

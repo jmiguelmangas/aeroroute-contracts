@@ -10,7 +10,7 @@ lint:
 	python3 scripts/contracts.py validate
 
 typecheck:
-	python3 -m compileall -q scripts tests
+	python3 -m compileall -q -x '.*\._.*' scripts tests
 
 test:
 	python3 -m unittest discover -s tests
