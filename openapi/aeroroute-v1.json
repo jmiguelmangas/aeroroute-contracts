@@ -194,6 +194,176 @@
         "title": "DataQualityFlag",
         "type": "object"
       },
+      "DestinationAlternate": {
+        "properties": {
+          "airac_cycle": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Airac Cycle"
+          },
+          "distance_from_destination_nm": {
+            "title": "Distance From Destination Nm",
+            "type": "number"
+          },
+          "estimated_flight_time_minutes": {
+            "title": "Estimated Flight Time Minutes",
+            "type": "number"
+          },
+          "estimated_fuel_kg": {
+            "title": "Estimated Fuel Kg",
+            "type": "number"
+          },
+          "icao_code": {
+            "title": "Icao Code",
+            "type": "string"
+          },
+          "longest_published_runway_ft": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Longest Published Runway Ft"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "navigation_source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Navigation Source"
+          },
+          "operationally_approved": {
+            "default": false,
+            "title": "Operationally Approved",
+            "type": "boolean"
+          },
+          "rationale": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Rationale",
+            "type": "array"
+          },
+          "runway_compatible": {
+            "title": "Runway Compatible",
+            "type": "boolean"
+          },
+          "selection": {
+            "enum": [
+              "requested",
+              "suggested"
+            ],
+            "title": "Selection",
+            "type": "string"
+          }
+        },
+        "required": [
+          "icao_code",
+          "name",
+          "distance_from_destination_nm",
+          "estimated_flight_time_minutes",
+          "estimated_fuel_kg",
+          "runway_compatible",
+          "selection"
+        ],
+        "title": "DestinationAlternate",
+        "type": "object"
+      },
+      "EnrouteDiversion": {
+        "properties": {
+          "airac_cycle": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Airac Cycle"
+          },
+          "distance_to_route_nm": {
+            "title": "Distance To Route Nm",
+            "type": "number"
+          },
+          "icao_code": {
+            "title": "Icao Code",
+            "type": "string"
+          },
+          "longest_published_runway_ft": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Longest Published Runway Ft"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "navigation_source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Navigation Source"
+          },
+          "nearest_route_fraction": {
+            "title": "Nearest Route Fraction",
+            "type": "number"
+          },
+          "operationally_approved": {
+            "default": false,
+            "title": "Operationally Approved",
+            "type": "boolean"
+          },
+          "rationale": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Rationale",
+            "type": "array"
+          },
+          "runway_compatible": {
+            "title": "Runway Compatible",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "icao_code",
+          "name",
+          "distance_to_route_nm",
+          "nearest_route_fraction",
+          "runway_compatible"
+        ],
+        "title": "EnrouteDiversion",
+        "type": "object"
+      },
       "ExplanationResponse": {
         "properties": {
           "provider": {
@@ -290,6 +460,106 @@
           "converged"
         ],
         "title": "FuelIterationSummary",
+        "type": "object"
+      },
+      "FuelPlanResponse": {
+        "properties": {
+          "alternate_fuel_kg": {
+            "title": "Alternate Fuel Kg",
+            "type": "number"
+          },
+          "assumptions": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Assumptions",
+            "type": "array"
+          },
+          "block_fuel_kg": {
+            "title": "Block Fuel Kg",
+            "type": "number"
+          },
+          "contingency_fuel_kg": {
+            "title": "Contingency Fuel Kg",
+            "type": "number"
+          },
+          "estimated_alternate_arrival_fuel_kg": {
+            "title": "Estimated Alternate Arrival Fuel Kg",
+            "type": "number"
+          },
+          "estimated_landing_fuel_kg": {
+            "title": "Estimated Landing Fuel Kg",
+            "type": "number"
+          },
+          "estimated_landing_mass_kg": {
+            "title": "Estimated Landing Mass Kg",
+            "type": "number"
+          },
+          "extra_fuel_kg": {
+            "title": "Extra Fuel Kg",
+            "type": "number"
+          },
+          "final_reserve_fuel_kg": {
+            "title": "Final Reserve Fuel Kg",
+            "type": "number"
+          },
+          "mass_converged": {
+            "default": false,
+            "title": "Mass Converged",
+            "type": "boolean"
+          },
+          "mass_iterations": {
+            "default": 1,
+            "title": "Mass Iterations",
+            "type": "integer"
+          },
+          "operationally_approved": {
+            "default": false,
+            "title": "Operationally Approved",
+            "type": "boolean"
+          },
+          "policy_identifier": {
+            "title": "Policy Identifier",
+            "type": "string"
+          },
+          "ramp_mass_kg": {
+            "title": "Ramp Mass Kg",
+            "type": "number"
+          },
+          "takeoff_fuel_kg": {
+            "title": "Takeoff Fuel Kg",
+            "type": "number"
+          },
+          "takeoff_mass_kg": {
+            "title": "Takeoff Mass Kg",
+            "type": "number"
+          },
+          "taxi_fuel_kg": {
+            "title": "Taxi Fuel Kg",
+            "type": "number"
+          },
+          "trip_fuel_kg": {
+            "title": "Trip Fuel Kg",
+            "type": "number"
+          }
+        },
+        "required": [
+          "policy_identifier",
+          "taxi_fuel_kg",
+          "trip_fuel_kg",
+          "contingency_fuel_kg",
+          "alternate_fuel_kg",
+          "final_reserve_fuel_kg",
+          "extra_fuel_kg",
+          "block_fuel_kg",
+          "takeoff_fuel_kg",
+          "estimated_landing_fuel_kg",
+          "estimated_alternate_arrival_fuel_kg",
+          "ramp_mass_kg",
+          "takeoff_mass_kg",
+          "estimated_landing_mass_kg"
+        ],
+        "title": "FuelPlanResponse",
         "type": "object"
       },
       "GeoJsonGeometry": {
@@ -472,6 +742,19 @@
             ],
             "title": "Arrival Runway"
           },
+          "contingency_percent": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contingency Percent"
+          },
           "departure_runway": {
             "anyOf": [
               {
@@ -497,11 +780,50 @@
             ],
             "title": "Departure Time Utc"
           },
+          "destination_alternate_icao": {
+            "anyOf": [
+              {
+                "maxLength": 8,
+                "minLength": 3,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Destination Alternate Icao"
+          },
           "destination_icao": {
             "maxLength": 8,
             "minLength": 3,
             "title": "Destination Icao",
             "type": "string"
+          },
+          "extra_fuel_kg": {
+            "anyOf": [
+              {
+                "maximum": 100000.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Extra Fuel Kg"
+          },
+          "final_reserve_minutes": {
+            "anyOf": [
+              {
+                "maximum": 120.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Final Reserve Minutes"
           },
           "origin_icao": {
             "maxLength": 8,
@@ -565,10 +887,37 @@
             "title": "Data Quality",
             "type": "array"
           },
+          "destination_alternate": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DestinationAlternate"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "enroute_diversions": {
+            "items": {
+              "$ref": "#/components/schemas/EnrouteDiversion"
+            },
+            "title": "Enroute Diversions",
+            "type": "array"
+          },
           "fuel_iteration": {
             "anyOf": [
               {
                 "$ref": "#/components/schemas/FuelIterationSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "fuel_plan": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FuelPlanResponse"
               },
               {
                 "type": "null"
@@ -1291,7 +1640,7 @@
   },
   "info": {
     "title": "AeroRoute MLX API",
-    "version": "0.2.0"
+    "version": "0.3.0"
   },
   "openapi": "3.1.0",
   "paths": {
