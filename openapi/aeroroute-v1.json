@@ -390,6 +390,270 @@
         "title": "ExplanationResponse",
         "type": "object"
       },
+      "FlightPlanHistoryItem": {
+        "properties": {
+          "aircraft_type": {
+            "title": "Aircraft Type",
+            "type": "string"
+          },
+          "callsign": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Callsign"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "destination_icao": {
+            "title": "Destination Icao",
+            "type": "string"
+          },
+          "flight_plan_id": {
+            "title": "Flight Plan Id",
+            "type": "string"
+          },
+          "optimization_run_id": {
+            "title": "Optimization Run Id",
+            "type": "string"
+          },
+          "origin_icao": {
+            "title": "Origin Icao",
+            "type": "string"
+          }
+        },
+        "required": [
+          "flight_plan_id",
+          "optimization_run_id",
+          "created_at",
+          "origin_icao",
+          "destination_icao",
+          "aircraft_type"
+        ],
+        "title": "FlightPlanHistoryItem",
+        "type": "object"
+      },
+      "FlightPlanRequest": {
+        "properties": {
+          "aircraft_type": {
+            "enum": [
+              "A320",
+              "B738",
+              "B77W",
+              "B788",
+              "A359",
+              "A388"
+            ],
+            "title": "Aircraft Type",
+            "type": "string"
+          },
+          "arrival_runway": {
+            "anyOf": [
+              {
+                "maxLength": 8,
+                "minLength": 2,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Arrival Runway"
+          },
+          "callsign": {
+            "anyOf": [
+              {
+                "maxLength": 12,
+                "minLength": 2,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Callsign"
+          },
+          "contingency_percent": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contingency Percent"
+          },
+          "departure_runway": {
+            "anyOf": [
+              {
+                "maxLength": 8,
+                "minLength": 2,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Departure Runway"
+          },
+          "departure_time_utc": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Departure Time Utc"
+          },
+          "destination_alternate_icao": {
+            "anyOf": [
+              {
+                "maxLength": 8,
+                "minLength": 3,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Destination Alternate Icao"
+          },
+          "destination_icao": {
+            "maxLength": 8,
+            "minLength": 3,
+            "title": "Destination Icao",
+            "type": "string"
+          },
+          "extra_fuel_kg": {
+            "anyOf": [
+              {
+                "maximum": 100000.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Extra Fuel Kg"
+          },
+          "final_reserve_minutes": {
+            "anyOf": [
+              {
+                "maximum": 120.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Final Reserve Minutes"
+          },
+          "origin_icao": {
+            "maxLength": 8,
+            "minLength": 3,
+            "title": "Origin Icao",
+            "type": "string"
+          },
+          "payload_mass_kg": {
+            "anyOf": [
+              {
+                "maximum": 100000.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Payload Mass Kg"
+          },
+          "profile": {
+            "default": "balanced",
+            "enum": [
+              "minimum_fuel",
+              "minimum_time",
+              "balanced"
+            ],
+            "title": "Profile",
+            "type": "string"
+          }
+        },
+        "required": [
+          "origin_icao",
+          "destination_icao",
+          "aircraft_type"
+        ],
+        "title": "FlightPlanRequest",
+        "type": "object"
+      },
+      "FlightPlanResponse": {
+        "properties": {
+          "coded_route": {
+            "title": "Coded Route",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "disclaimer": {
+            "title": "Disclaimer",
+            "type": "string"
+          },
+          "flight_plan_id": {
+            "title": "Flight Plan Id",
+            "type": "string"
+          },
+          "operationally_approved": {
+            "default": false,
+            "title": "Operationally Approved",
+            "type": "boolean"
+          },
+          "optimization": {
+            "$ref": "#/components/schemas/OptimizationResponse"
+          },
+          "optimization_run_id": {
+            "title": "Optimization Run Id",
+            "type": "string"
+          },
+          "request": {
+            "$ref": "#/components/schemas/FlightPlanRequest"
+          },
+          "status": {
+            "const": "completed",
+            "default": "completed",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "flight_plan_id",
+          "optimization_run_id",
+          "created_at",
+          "coded_route",
+          "request",
+          "optimization",
+          "disclaimer"
+        ],
+        "title": "FlightPlanResponse",
+        "type": "object"
+      },
       "FuelBreakdown": {
         "properties": {
           "cruise_fuel_kg": {
@@ -830,6 +1094,19 @@
             "minLength": 3,
             "title": "Origin Icao",
             "type": "string"
+          },
+          "payload_mass_kg": {
+            "anyOf": [
+              {
+                "maximum": 100000.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Payload Mass Kg"
           },
           "profile": {
             "default": "balanced",
@@ -1640,7 +1917,7 @@
   },
   "info": {
     "title": "AeroRoute MLX API",
-    "version": "0.3.0"
+    "version": "0.4.0"
   },
   "openapi": "3.1.0",
   "paths": {
@@ -1851,6 +2128,154 @@
         "summary": "List Runways",
         "tags": [
           "navigation"
+        ]
+      }
+    },
+    "/api/v1/flight-plans": {
+      "get": {
+        "operationId": "list_flight_plans_api_v1_flight_plans_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/FlightPlanHistoryItem"
+                  },
+                  "title": "Response List Flight Plans Api V1 Flight Plans Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List Flight Plans",
+        "tags": [
+          "flight-plans"
+        ]
+      },
+      "post": {
+        "operationId": "create_flight_plan_api_v1_flight_plans_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FlightPlanRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlightPlanResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Create Flight Plan",
+        "tags": [
+          "flight-plans"
+        ]
+      }
+    },
+    "/api/v1/flight-plans/{flight_plan_id}": {
+      "get": {
+        "operationId": "get_flight_plan_api_v1_flight_plans__flight_plan_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "flight_plan_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Flight Plan Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FlightPlanResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Flight Plan",
+        "tags": [
+          "flight-plans"
+        ]
+      }
+    },
+    "/api/v1/flight-plans/{flight_plan_id}/pdf": {
+      "get": {
+        "operationId": "get_flight_plan_pdf_api_v1_flight_plans__flight_plan_id__pdf_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "flight_plan_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Flight Plan Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Flight Plan Pdf",
+        "tags": [
+          "flight-plans"
         ]
       }
     },
