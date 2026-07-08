@@ -993,12 +993,25 @@
             "title": "Disclaimer",
             "type": "string"
           },
+          "evidence_baseline": {
+            "title": "Evidence Baseline",
+            "type": "string"
+          },
+          "evidence_contract_version": {
+            "default": "1.0.0",
+            "title": "Evidence Contract Version",
+            "type": "string"
+          },
           "gaps": {
             "items": {
               "$ref": "#/components/schemas/OperationalReadinessGap"
             },
             "title": "Gaps",
             "type": "array"
+          },
+          "hazard_log_baseline": {
+            "title": "Hazard Log Baseline",
+            "type": "string"
           },
           "licensed_operational_data_present": {
             "default": false,
@@ -1058,6 +1071,8 @@
           "requested_mode",
           "operational_use_enabled",
           "status",
+          "evidence_baseline",
+          "hazard_log_baseline",
           "disclaimer"
         ],
         "title": "OperationalReadinessResponse",
@@ -2196,7 +2211,7 @@
   },
   "info": {
     "title": "AeroRoute MLX API",
-    "version": "0.7.0"
+    "version": "0.8.0"
   },
   "openapi": "3.1.0",
   "paths": {

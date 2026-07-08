@@ -1,0 +1,126 @@
+{
+  "$id": "https://aeroroute.dev/contracts/operational-readiness-evidence/v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "1.0.0"
+    },
+    "evidence_gates": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[a-z0-9_]+$",
+            "type": "string"
+          },
+          "required_before_ops": {
+            "type": "boolean"
+          },
+          "status": {
+            "enum": [
+              "missing",
+              "partial",
+              "present",
+              "accepted"
+            ]
+          },
+          "title": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "status",
+          "required_before_ops"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "generated_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "operational_use_enabled": {
+      "const": false,
+      "type": "boolean"
+    },
+    "ops_mode": {
+      "enum": [
+        "simulator",
+        "ops_candidate",
+        "approved_operator_build"
+      ]
+    },
+    "requirements": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "blocking_for_operational_use": {
+            "type": "boolean"
+          },
+          "id": {
+            "pattern": "^OPS-REQ-[0-9]{3}$",
+            "type": "string"
+          },
+          "owner_repo": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "phase": {
+            "maximum": 20,
+            "minimum": 15,
+            "type": "integer"
+          },
+          "status": {
+            "enum": [
+              "planned",
+              "implemented",
+              "blocked",
+              "accepted"
+            ]
+          },
+          "title": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "verification": {
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "phase",
+          "title",
+          "status",
+          "owner_repo",
+          "verification",
+          "blocking_for_operational_use"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "contract_version",
+    "generated_at",
+    "ops_mode",
+    "operational_use_enabled",
+    "requirements",
+    "evidence_gates"
+  ],
+  "type": "object"
+}

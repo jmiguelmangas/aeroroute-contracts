@@ -1,0 +1,95 @@
+{
+  "$id": "https://aeroroute.dev/contracts/operational-hazard-log/v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "1.0.0"
+    },
+    "generated_at": {
+      "format": "date-time",
+      "type": "string"
+    },
+    "hazards": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "blocking_for_operational_use": {
+            "type": "boolean"
+          },
+          "failure_condition": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^OPS-HAZ-[0-9]{3}$",
+            "type": "string"
+          },
+          "mitigations": {
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          },
+          "phase": {
+            "maximum": 20,
+            "minimum": 15,
+            "type": "integer"
+          },
+          "severity": {
+            "enum": [
+              "catastrophic",
+              "hazardous",
+              "major",
+              "minor",
+              "no_safety_effect",
+              "unclassified"
+            ]
+          },
+          "status": {
+            "enum": [
+              "open",
+              "mitigated",
+              "accepted"
+            ]
+          },
+          "title": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "verification": {
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "minItems": 1,
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "phase",
+          "title",
+          "failure_condition",
+          "severity",
+          "status",
+          "mitigations",
+          "verification",
+          "blocking_for_operational_use"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "contract_version",
+    "generated_at",
+    "hazards"
+  ],
+  "type": "object"
+}
