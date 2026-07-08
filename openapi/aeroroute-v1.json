@@ -941,6 +941,128 @@
         "title": "ObjectiveBreakdown",
         "type": "object"
       },
+      "OperationalReadinessGap": {
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "detail": {
+            "title": "Detail",
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "blocking",
+              "warning"
+            ],
+            "title": "Severity",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "title",
+          "severity",
+          "detail"
+        ],
+        "title": "OperationalReadinessGap",
+        "type": "object"
+      },
+      "OperationalReadinessResponse": {
+        "properties": {
+          "active_mode": {
+            "enum": [
+              "simulator",
+              "ops_candidate",
+              "approved_operator_build"
+            ],
+            "title": "Active Mode",
+            "type": "string"
+          },
+          "approval_required": {
+            "default": true,
+            "title": "Approval Required",
+            "type": "boolean"
+          },
+          "disclaimer": {
+            "title": "Disclaimer",
+            "type": "string"
+          },
+          "gaps": {
+            "items": {
+              "$ref": "#/components/schemas/OperationalReadinessGap"
+            },
+            "title": "Gaps",
+            "type": "array"
+          },
+          "licensed_operational_data_present": {
+            "default": false,
+            "title": "Licensed Operational Data Present",
+            "type": "boolean"
+          },
+          "manual_procedure_acceptance_present": {
+            "default": false,
+            "title": "Manual Procedure Acceptance Present",
+            "type": "boolean"
+          },
+          "operational_use_enabled": {
+            "title": "Operational Use Enabled",
+            "type": "boolean"
+          },
+          "operator_profile_present": {
+            "default": false,
+            "title": "Operator Profile Present",
+            "type": "boolean"
+          },
+          "regulator_path_identified": {
+            "default": false,
+            "title": "Regulator Path Identified",
+            "type": "boolean"
+          },
+          "requested_mode": {
+            "enum": [
+              "simulator",
+              "ops_candidate",
+              "approved_operator_build"
+            ],
+            "title": "Requested Mode",
+            "type": "string"
+          },
+          "requirements_traceability_present": {
+            "default": false,
+            "title": "Requirements Traceability Present",
+            "type": "boolean"
+          },
+          "safety_case_present": {
+            "default": false,
+            "title": "Safety Case Present",
+            "type": "boolean"
+          },
+          "status": {
+            "enum": [
+              "simulator_only",
+              "blocked",
+              "approved"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "active_mode",
+          "requested_mode",
+          "operational_use_enabled",
+          "status",
+          "disclaimer"
+        ],
+        "title": "OperationalReadinessResponse",
+        "type": "object"
+      },
       "OptimizationHistoryItem": {
         "properties": {
           "aircraft_type": {
@@ -2074,7 +2196,7 @@
   },
   "info": {
     "title": "AeroRoute MLX API",
-    "version": "0.5.0"
+    "version": "0.7.0"
   },
   "openapi": "3.1.0",
   "paths": {
@@ -2488,6 +2610,27 @@
         "summary": "Get Flight Plan Pdf",
         "tags": [
           "flight-plans"
+        ]
+      }
+    },
+    "/api/v1/operational-readiness": {
+      "get": {
+        "operationId": "operational_readiness_api_v1_operational_readiness_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationalReadinessResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Operational Readiness",
+        "tags": [
+          "operational-readiness"
         ]
       }
     },
