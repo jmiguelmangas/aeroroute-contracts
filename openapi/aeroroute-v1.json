@@ -1373,6 +1373,163 @@
         "title": "RoutePoint",
         "type": "object"
       },
+      "RouteSupportAirportCoverage": {
+        "properties": {
+          "airac_cycle": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Airac Cycle"
+          },
+          "airport_icao": {
+            "title": "Airport Icao",
+            "type": "string"
+          },
+          "compatible_procedure_count": {
+            "default": 0,
+            "title": "Compatible Procedure Count",
+            "type": "integer"
+          },
+          "procedure_available": {
+            "title": "Procedure Available",
+            "type": "boolean"
+          },
+          "procedure_type": {
+            "enum": [
+              "SID",
+              "STAR"
+            ],
+            "title": "Procedure Type",
+            "type": "string"
+          },
+          "runway_available": {
+            "title": "Runway Available",
+            "type": "boolean"
+          },
+          "suggested_runway": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Suggested Runway"
+          }
+        },
+        "required": [
+          "airport_icao",
+          "procedure_type",
+          "runway_available",
+          "procedure_available"
+        ],
+        "title": "RouteSupportAirportCoverage",
+        "type": "object"
+      },
+      "RouteSupportProblem": {
+        "properties": {
+          "airport_icao": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Airport Icao"
+          },
+          "code": {
+            "enum": [
+              "airport_not_supported",
+              "navigation_provider_unavailable",
+              "runway_procedure_coverage_missing"
+            ],
+            "title": "Code",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "RouteSupportProblem",
+        "type": "object"
+      },
+      "RouteSupportResponse": {
+        "properties": {
+          "airac_cycle": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Airac Cycle"
+          },
+          "airports": {
+            "items": {
+              "$ref": "#/components/schemas/RouteSupportAirportCoverage"
+            },
+            "title": "Airports",
+            "type": "array"
+          },
+          "destination_icao": {
+            "title": "Destination Icao",
+            "type": "string"
+          },
+          "navigation_manifest": {
+            "additionalProperties": true,
+            "title": "Navigation Manifest",
+            "type": "object"
+          },
+          "origin_icao": {
+            "title": "Origin Icao",
+            "type": "string"
+          },
+          "problems": {
+            "items": {
+              "$ref": "#/components/schemas/RouteSupportProblem"
+            },
+            "title": "Problems",
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "supported",
+              "unsupported",
+              "unavailable"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "supported": {
+            "title": "Supported",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "origin_icao",
+          "destination_icao",
+          "supported",
+          "status",
+          "navigation_manifest"
+        ],
+        "title": "RouteSupportResponse",
+        "type": "object"
+      },
       "RunwayOption": {
         "properties": {
           "bearing_deg": {
@@ -1985,6 +2142,61 @@
         "summary": "Search Airports",
         "tags": [
           "airports"
+        ]
+      }
+    },
+    "/api/v1/airports/route-support": {
+      "get": {
+        "operationId": "route_support_api_v1_airports_route_support_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "origin_icao",
+            "required": true,
+            "schema": {
+              "maxLength": 8,
+              "minLength": 3,
+              "title": "Origin Icao",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "destination_icao",
+            "required": true,
+            "schema": {
+              "maxLength": 8,
+              "minLength": 3,
+              "title": "Destination Icao",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RouteSupportResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Route Support",
+        "tags": [
+          "navigation"
         ]
       }
     },
