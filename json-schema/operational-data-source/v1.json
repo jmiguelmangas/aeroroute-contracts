@@ -1,0 +1,135 @@
+{
+  "$id": "https://aeroroute.dev/contracts/operational-data-source/v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "contract_version": {
+      "const": "1.0.0"
+    },
+    "domain": {
+      "enum": [
+        "navdata",
+        "weather",
+        "notam",
+        "airspace_restrictions",
+        "airport_status",
+        "terrain_obstacle",
+        "aircraft_performance",
+        "filing"
+      ]
+    },
+    "expires_at": {
+      "format": "date-time",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "fallback_behavior": {
+      "enum": [
+        "block_operational_use",
+        "degrade_simulator_only",
+        "not_available"
+      ]
+    },
+    "license": {
+      "additionalProperties": false,
+      "properties": {
+        "approved_for_operational_use": {
+          "type": "boolean"
+        },
+        "redistribution_allowed": {
+          "type": "boolean"
+        },
+        "terms": {
+          "minLength": 1,
+          "type": "string"
+        }
+      },
+      "required": [
+        "terms",
+        "approved_for_operational_use",
+        "redistribution_allowed"
+      ],
+      "type": "object"
+    },
+    "operational_ready": {
+      "type": "boolean"
+    },
+    "quality": {
+      "additionalProperties": false,
+      "properties": {
+        "grade": {
+          "enum": [
+            "unknown",
+            "demo",
+            "public_reference",
+            "candidate",
+            "operational"
+          ]
+        },
+        "validated_at": {
+          "format": "date-time",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "validation_status": {
+          "enum": [
+            "not_validated",
+            "partial",
+            "validated"
+          ]
+        }
+      },
+      "required": [
+        "grade",
+        "validation_status",
+        "validated_at"
+      ],
+      "type": "object"
+    },
+    "source": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "missing",
+        "demo_only",
+        "candidate",
+        "expired",
+        "operational"
+      ]
+    },
+    "timestamp": {
+      "format": "date-time",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "version_or_cycle": {
+      "minLength": 1,
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "contract_version",
+    "domain",
+    "source",
+    "status",
+    "version_or_cycle",
+    "timestamp",
+    "expires_at",
+    "license",
+    "quality",
+    "fallback_behavior",
+    "operational_ready"
+  ],
+  "type": "object"
+}

@@ -941,6 +941,251 @@
         "title": "ObjectiveBreakdown",
         "type": "object"
       },
+      "OperationalDataSource": {
+        "properties": {
+          "blockers": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Blockers",
+            "type": "array"
+          },
+          "contract_version": {
+            "default": "1.0.0",
+            "title": "Contract Version",
+            "type": "string"
+          },
+          "domain": {
+            "enum": [
+              "navdata",
+              "weather",
+              "notam",
+              "airspace_restrictions",
+              "airport_status",
+              "terrain_obstacle",
+              "aircraft_performance",
+              "filing"
+            ],
+            "title": "Domain",
+            "type": "string"
+          },
+          "expires_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expires At"
+          },
+          "fallback_behavior": {
+            "enum": [
+              "block_operational_use",
+              "degrade_simulator_only",
+              "not_available"
+            ],
+            "title": "Fallback Behavior",
+            "type": "string"
+          },
+          "license": {
+            "$ref": "#/components/schemas/OperationalDataSourceLicense"
+          },
+          "operational_ready": {
+            "title": "Operational Ready",
+            "type": "boolean"
+          },
+          "quality": {
+            "$ref": "#/components/schemas/OperationalDataSourceQuality"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "missing",
+              "demo_only",
+              "candidate",
+              "expired",
+              "operational"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "timestamp": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Timestamp"
+          },
+          "version_or_cycle": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version Or Cycle"
+          }
+        },
+        "required": [
+          "domain",
+          "source",
+          "status",
+          "license",
+          "quality",
+          "fallback_behavior",
+          "operational_ready"
+        ],
+        "title": "OperationalDataSource",
+        "type": "object"
+      },
+      "OperationalDataSourceLicense": {
+        "properties": {
+          "approved_for_operational_use": {
+            "title": "Approved For Operational Use",
+            "type": "boolean"
+          },
+          "redistribution_allowed": {
+            "title": "Redistribution Allowed",
+            "type": "boolean"
+          },
+          "terms": {
+            "title": "Terms",
+            "type": "string"
+          }
+        },
+        "required": [
+          "terms",
+          "approved_for_operational_use",
+          "redistribution_allowed"
+        ],
+        "title": "OperationalDataSourceLicense",
+        "type": "object"
+      },
+      "OperationalDataSourceQuality": {
+        "properties": {
+          "grade": {
+            "enum": [
+              "unknown",
+              "demo",
+              "public_reference",
+              "candidate",
+              "operational"
+            ],
+            "title": "Grade",
+            "type": "string"
+          },
+          "validated_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Validated At"
+          },
+          "validation_status": {
+            "enum": [
+              "not_validated",
+              "partial",
+              "validated"
+            ],
+            "title": "Validation Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "grade",
+          "validation_status"
+        ],
+        "title": "OperationalDataSourceQuality",
+        "type": "object"
+      },
+      "OperationalDataSourcesResponse": {
+        "properties": {
+          "active_mode": {
+            "const": "simulator",
+            "title": "Active Mode",
+            "type": "string"
+          },
+          "blocking_domains": {
+            "items": {
+              "enum": [
+                "navdata",
+                "weather",
+                "notam",
+                "airspace_restrictions",
+                "airport_status",
+                "terrain_obstacle",
+                "aircraft_performance",
+                "filing"
+              ],
+              "type": "string"
+            },
+            "title": "Blocking Domains",
+            "type": "array"
+          },
+          "data_baseline": {
+            "default": "operational-data-sources-2026-07-09",
+            "title": "Data Baseline",
+            "type": "string"
+          },
+          "data_contract_version": {
+            "default": "1.0.0",
+            "title": "Data Contract Version",
+            "type": "string"
+          },
+          "operational_use_enabled": {
+            "title": "Operational Use Enabled",
+            "type": "boolean"
+          },
+          "requested_mode": {
+            "enum": [
+              "simulator",
+              "ops_candidate",
+              "approved_operator_build"
+            ],
+            "title": "Requested Mode",
+            "type": "string"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/OperationalDataSource"
+            },
+            "title": "Sources",
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "simulator_only",
+              "blocked"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "active_mode",
+          "requested_mode",
+          "operational_use_enabled",
+          "status",
+          "sources"
+        ],
+        "title": "OperationalDataSourcesResponse",
+        "type": "object"
+      },
       "OperationalReadinessGap": {
         "properties": {
           "code": {
@@ -2211,7 +2456,7 @@
   },
   "info": {
     "title": "AeroRoute MLX API",
-    "version": "0.8.0"
+    "version": "0.9.0"
   },
   "openapi": "3.1.0",
   "paths": {
@@ -2625,6 +2870,27 @@
         "summary": "Get Flight Plan Pdf",
         "tags": [
           "flight-plans"
+        ]
+      }
+    },
+    "/api/v1/operational-data-sources": {
+      "get": {
+        "operationId": "operational_data_sources_api_v1_operational_data_sources_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperationalDataSourcesResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Operational Data Sources",
+        "tags": [
+          "operational-data-sources"
         ]
       }
     },
