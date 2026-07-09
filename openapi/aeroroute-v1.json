@@ -883,6 +883,202 @@
         "title": "HTTPValidationError",
         "type": "object"
       },
+      "IcaoFplItemValidation": {
+        "properties": {
+          "blockers": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Blockers",
+            "type": "array"
+          },
+          "item": {
+            "enum": [
+              "7",
+              "8",
+              "9",
+              "10",
+              "13",
+              "15",
+              "16",
+              "18",
+              "19"
+            ],
+            "title": "Item",
+            "type": "string"
+          },
+          "valid": {
+            "title": "Valid",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "item",
+          "valid"
+        ],
+        "title": "IcaoFplItemValidation",
+        "type": "object"
+      },
+      "IcaoFplValidationRequest": {
+        "properties": {
+          "aircraft_identification": {
+            "maxLength": 7,
+            "minLength": 2,
+            "title": "Aircraft Identification",
+            "type": "string"
+          },
+          "aircraft_type": {
+            "maxLength": 4,
+            "minLength": 2,
+            "title": "Aircraft Type",
+            "type": "string"
+          },
+          "alternate_aerodrome": {
+            "anyOf": [
+              {
+                "maxLength": 4,
+                "minLength": 4,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Alternate Aerodrome"
+          },
+          "cruising_level": {
+            "default": "F350",
+            "pattern": "^[FA][0-9]{3}$",
+            "title": "Cruising Level",
+            "type": "string"
+          },
+          "cruising_speed": {
+            "default": "N0480",
+            "pattern": "^[NK][0-9]{4}$",
+            "title": "Cruising Speed",
+            "type": "string"
+          },
+          "departure_aerodrome": {
+            "maxLength": 4,
+            "minLength": 4,
+            "title": "Departure Aerodrome",
+            "type": "string"
+          },
+          "departure_time_hhmm": {
+            "pattern": "^[0-2][0-9][0-5][0-9]$",
+            "title": "Departure Time Hhmm",
+            "type": "string"
+          },
+          "destination_aerodrome": {
+            "maxLength": 4,
+            "minLength": 4,
+            "title": "Destination Aerodrome",
+            "type": "string"
+          },
+          "equipment": {
+            "default": "SDE2E3FGHIJ1J5M1RWXY/LB1",
+            "minLength": 1,
+            "title": "Equipment",
+            "type": "string"
+          },
+          "flight_rules": {
+            "default": "I",
+            "enum": [
+              "I",
+              "V",
+              "Y",
+              "Z"
+            ],
+            "title": "Flight Rules",
+            "type": "string"
+          },
+          "flight_type": {
+            "default": "S",
+            "enum": [
+              "S",
+              "N",
+              "G",
+              "M",
+              "X"
+            ],
+            "title": "Flight Type",
+            "type": "string"
+          },
+          "other_information": {
+            "default": "",
+            "maxLength": 1000,
+            "title": "Other Information",
+            "type": "string"
+          },
+          "route": {
+            "maxLength": 1500,
+            "minLength": 1,
+            "title": "Route",
+            "type": "string"
+          },
+          "total_eet_hhmm": {
+            "pattern": "^[0-9]{4}$",
+            "title": "Total Eet Hhmm",
+            "type": "string"
+          }
+        },
+        "required": [
+          "aircraft_identification",
+          "aircraft_type",
+          "departure_aerodrome",
+          "departure_time_hhmm",
+          "route",
+          "destination_aerodrome",
+          "total_eet_hhmm"
+        ],
+        "title": "IcaoFplValidationRequest",
+        "type": "object"
+      },
+      "IcaoFplValidationResponse": {
+        "properties": {
+          "baseline": {
+            "default": "icao-fpl-validation-2026-07-09",
+            "title": "Baseline",
+            "type": "string"
+          },
+          "contract_version": {
+            "default": "1.0.0",
+            "title": "Contract Version",
+            "type": "string"
+          },
+          "filing_enabled": {
+            "default": false,
+            "title": "Filing Enabled",
+            "type": "boolean"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/IcaoFplItemValidation"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "operational_use_enabled": {
+            "default": false,
+            "title": "Operational Use Enabled",
+            "type": "boolean"
+          },
+          "status": {
+            "enum": [
+              "blocked",
+              "invalid"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "items"
+        ],
+        "title": "IcaoFplValidationResponse",
+        "type": "object"
+      },
       "ObjectiveBreakdown": {
         "properties": {
           "extension_component": {
@@ -2456,7 +2652,7 @@
   },
   "info": {
     "title": "AeroRoute MLX API",
-    "version": "0.9.0"
+    "version": "0.10.0"
   },
   "openapi": "3.1.0",
   "paths": {
@@ -2870,6 +3066,47 @@
         "summary": "Get Flight Plan Pdf",
         "tags": [
           "flight-plans"
+        ]
+      }
+    },
+    "/api/v1/icao-fpl/validate": {
+      "post": {
+        "operationId": "validate_fpl_api_v1_icao_fpl_validate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IcaoFplValidationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IcaoFplValidationResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Validate Fpl",
+        "tags": [
+          "icao-fpl"
         ]
       }
     },

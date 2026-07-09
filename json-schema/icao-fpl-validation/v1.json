@@ -1,0 +1,74 @@
+{
+  "$id": "https://aeroroute.dev/contracts/icao-fpl-validation/v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "baseline": {
+      "const": "icao-fpl-validation-2026-07-09"
+    },
+    "contract_version": {
+      "const": "1.0.0"
+    },
+    "filing_enabled": {
+      "const": false,
+      "type": "boolean"
+    },
+    "items": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "blockers": {
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "item": {
+            "enum": [
+              "7",
+              "8",
+              "9",
+              "10",
+              "13",
+              "15",
+              "16",
+              "18",
+              "19"
+            ]
+          },
+          "valid": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "item",
+          "valid",
+          "blockers"
+        ],
+        "type": "object"
+      },
+      "minItems": 9,
+      "type": "array"
+    },
+    "operational_use_enabled": {
+      "const": false,
+      "type": "boolean"
+    },
+    "status": {
+      "enum": [
+        "blocked",
+        "invalid"
+      ]
+    }
+  },
+  "required": [
+    "contract_version",
+    "baseline",
+    "operational_use_enabled",
+    "filing_enabled",
+    "status",
+    "items"
+  ],
+  "type": "object"
+}
