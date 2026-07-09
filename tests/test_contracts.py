@@ -35,6 +35,23 @@ class ContractTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "missing \\$schema"):
                 validate_contracts(root)
 
+    def test_icao_fpl_validation_schema_pins_non_operational_flags(self) -> None:
+        schema_path = (
+            Path(__file__).resolve().parent.parent
+            / "json-schema"
+            / "icao-fpl-validation"
+            / "v1.json"
+        )
+        schema = json.loads(schema_path.read_text())
+
+        properties = schema["properties"]
+        self.assertIs(properties["filing_enabled"]["const"], False)
+        self.assertIs(properties["operational_use_enabled"]["const"], False)
+
+        required = schema["required"]
+        self.assertIn("filing_enabled", required)
+        self.assertIn("operational_use_enabled", required)
+
     def test_bundle_contains_version_and_contracts(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             output = Path(directory) / "contracts.zip"
