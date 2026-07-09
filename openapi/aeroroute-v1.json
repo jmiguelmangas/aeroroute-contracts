@@ -1663,6 +1663,84 @@
         "title": "OperationalReadinessResponse",
         "type": "object"
       },
+      "OperatorApprovalGate": {
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "missing",
+              "partial",
+              "accepted"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "status",
+          "detail"
+        ],
+        "title": "OperatorApprovalGate",
+        "type": "object"
+      },
+      "OperatorApprovalReadinessResponse": {
+        "properties": {
+          "baseline": {
+            "default": "operator-approval-readiness-2026-07-09",
+            "title": "Baseline",
+            "type": "string"
+          },
+          "contract_version": {
+            "default": "1.0.0",
+            "title": "Contract Version",
+            "type": "string"
+          },
+          "gates": {
+            "items": {
+              "$ref": "#/components/schemas/OperatorApprovalGate"
+            },
+            "title": "Gates",
+            "type": "array"
+          },
+          "operational_use_enabled": {
+            "default": false,
+            "title": "Operational Use Enabled",
+            "type": "boolean"
+          },
+          "operator_approval_enabled": {
+            "default": false,
+            "title": "Operator Approval Enabled",
+            "type": "boolean"
+          },
+          "ops_mode": {
+            "const": "simulator",
+            "default": "simulator",
+            "title": "Ops Mode",
+            "type": "string"
+          },
+          "rollout_state": {
+            "const": "blocked",
+            "default": "blocked",
+            "title": "Rollout State",
+            "type": "string"
+          }
+        },
+        "title": "OperatorApprovalReadinessResponse",
+        "type": "object"
+      },
       "OptimizationHistoryItem": {
         "properties": {
           "aircraft_type": {
@@ -2796,7 +2874,7 @@
   },
   "info": {
     "title": "AeroRoute MLX API",
-    "version": "0.12.0"
+    "version": "0.13.0"
   },
   "openapi": "3.1.0",
   "paths": {
@@ -3335,6 +3413,27 @@
         "summary": "Operational Readiness",
         "tags": [
           "operational-readiness"
+        ]
+      }
+    },
+    "/api/v1/operator-approval-readiness": {
+      "get": {
+        "operationId": "operator_approval_readiness_api_v1_operator_approval_readiness_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OperatorApprovalReadinessResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Operator Approval Readiness",
+        "tags": [
+          "operator-approval"
         ]
       }
     },

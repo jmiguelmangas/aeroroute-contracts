@@ -1,0 +1,72 @@
+{
+  "$id": "https://aeroroute.dev/contracts/operator-approval-readiness/v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "baseline": {
+      "const": "operator-approval-readiness-2026-07-09"
+    },
+    "contract_version": {
+      "const": "1.0.0"
+    },
+    "gates": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "detail": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "pattern": "^[a-z0-9_]+$",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "missing",
+              "partial",
+              "accepted"
+            ]
+          },
+          "title": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "status",
+          "detail"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "operational_use_enabled": {
+      "const": false,
+      "type": "boolean"
+    },
+    "operator_approval_enabled": {
+      "const": false,
+      "type": "boolean"
+    },
+    "ops_mode": {
+      "const": "simulator"
+    },
+    "rollout_state": {
+      "const": "blocked"
+    }
+  },
+  "required": [
+    "contract_version",
+    "baseline",
+    "operational_use_enabled",
+    "operator_approval_enabled",
+    "rollout_state",
+    "ops_mode",
+    "gates"
+  ],
+  "type": "object"
+}
