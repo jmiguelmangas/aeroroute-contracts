@@ -1,0 +1,63 @@
+{
+  "$id": "https://aeroroute.dev/contracts/dispatch-readiness/v1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "baseline": {
+      "const": "dispatch-readiness-2026-07-09"
+    },
+    "contract_version": {
+      "const": "1.0.0"
+    },
+    "dispatch_release_enabled": {
+      "const": false,
+      "type": "boolean"
+    },
+    "gates": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "pattern": "^[a-z0-9_]+$",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "missing",
+              "partial",
+              "accepted"
+            ]
+          },
+          "title": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "status"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "operational_use_enabled": {
+      "const": false,
+      "type": "boolean"
+    },
+    "status": {
+      "const": "blocked"
+    }
+  },
+  "required": [
+    "contract_version",
+    "baseline",
+    "operational_use_enabled",
+    "dispatch_release_enabled",
+    "status",
+    "gates"
+  ],
+  "type": "object"
+}

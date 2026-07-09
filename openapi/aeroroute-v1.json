@@ -286,6 +286,78 @@
         "title": "DestinationAlternate",
         "type": "object"
       },
+      "DispatchReadinessGate": {
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "missing",
+              "partial",
+              "accepted"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "status",
+          "detail"
+        ],
+        "title": "DispatchReadinessGate",
+        "type": "object"
+      },
+      "DispatchReadinessResponse": {
+        "properties": {
+          "baseline": {
+            "default": "dispatch-readiness-2026-07-09",
+            "title": "Baseline",
+            "type": "string"
+          },
+          "contract_version": {
+            "default": "1.0.0",
+            "title": "Contract Version",
+            "type": "string"
+          },
+          "dispatch_release_enabled": {
+            "default": false,
+            "title": "Dispatch Release Enabled",
+            "type": "boolean"
+          },
+          "gates": {
+            "items": {
+              "$ref": "#/components/schemas/DispatchReadinessGate"
+            },
+            "title": "Gates",
+            "type": "array"
+          },
+          "operational_use_enabled": {
+            "default": false,
+            "title": "Operational Use Enabled",
+            "type": "boolean"
+          },
+          "status": {
+            "const": "blocked",
+            "default": "blocked",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "title": "DispatchReadinessResponse",
+        "type": "object"
+      },
       "EnrouteDiversion": {
         "properties": {
           "airac_cycle": {
@@ -2652,7 +2724,7 @@
   },
   "info": {
     "title": "AeroRoute MLX API",
-    "version": "0.10.0"
+    "version": "0.11.0"
   },
   "openapi": "3.1.0",
   "paths": {
@@ -2918,6 +2990,27 @@
         "summary": "List Runways",
         "tags": [
           "navigation"
+        ]
+      }
+    },
+    "/api/v1/dispatch-readiness": {
+      "get": {
+        "operationId": "dispatch_readiness_api_v1_dispatch_readiness_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DispatchReadinessResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Dispatch Readiness",
+        "tags": [
+          "dispatch"
         ]
       }
     },
