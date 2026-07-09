@@ -91,6 +91,78 @@
         "title": "AirportResponse",
         "type": "object"
       },
+      "AssuranceReadinessGate": {
+        "properties": {
+          "detail": {
+            "title": "Detail",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "missing",
+              "partial",
+              "accepted"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "status",
+          "detail"
+        ],
+        "title": "AssuranceReadinessGate",
+        "type": "object"
+      },
+      "AssuranceReadinessResponse": {
+        "properties": {
+          "assurance_enabled": {
+            "default": false,
+            "title": "Assurance Enabled",
+            "type": "boolean"
+          },
+          "baseline": {
+            "default": "assurance-readiness-2026-07-09",
+            "title": "Baseline",
+            "type": "string"
+          },
+          "contract_version": {
+            "default": "1.0.0",
+            "title": "Contract Version",
+            "type": "string"
+          },
+          "gates": {
+            "items": {
+              "$ref": "#/components/schemas/AssuranceReadinessGate"
+            },
+            "title": "Gates",
+            "type": "array"
+          },
+          "operational_use_enabled": {
+            "default": false,
+            "title": "Operational Use Enabled",
+            "type": "boolean"
+          },
+          "status": {
+            "const": "blocked",
+            "default": "blocked",
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "title": "AssuranceReadinessResponse",
+        "type": "object"
+      },
       "CandidateResponse": {
         "properties": {
           "display_geojson": {
@@ -2724,7 +2796,7 @@
   },
   "info": {
     "title": "AeroRoute MLX API",
-    "version": "0.11.0"
+    "version": "0.12.0"
   },
   "openapi": "3.1.0",
   "paths": {
@@ -2990,6 +3062,27 @@
         "summary": "List Runways",
         "tags": [
           "navigation"
+        ]
+      }
+    },
+    "/api/v1/assurance-readiness": {
+      "get": {
+        "operationId": "assurance_readiness_api_v1_assurance_readiness_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssuranceReadinessResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Assurance Readiness",
+        "tags": [
+          "assurance"
         ]
       }
     },

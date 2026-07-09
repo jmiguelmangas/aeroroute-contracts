@@ -22,7 +22,7 @@ class ContractTests(unittest.TestCase):
             )
 
     def test_repository_contracts_are_valid(self) -> None:
-        self.assertEqual(len(validate_contracts()), 9)
+        self.assertEqual(len(validate_contracts()), 10)
 
     def test_schema_marker_is_required(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
