@@ -3,6 +3,60 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "additionalProperties": false,
   "properties": {
+    "aircraft_capability": {
+      "additionalProperties": false,
+      "properties": {
+        "aircraft_type": {
+          "minLength": 2,
+          "type": "string"
+        },
+        "allowed_equipment": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "blockers": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "capability_baseline": {
+          "const": "aircraft-capability-simulator-2026-07-09"
+        },
+        "operator_approval_status": {
+          "const": "missing"
+        },
+        "requested_equipment": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "unsupported_equipment": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "aircraft_type",
+        "capability_baseline",
+        "operator_approval_status",
+        "allowed_equipment",
+        "requested_equipment",
+        "unsupported_equipment",
+        "blockers"
+      ],
+      "type": "object"
+    },
     "baseline": {
       "const": "icao-fpl-validation-2026-07-09"
     },
@@ -68,7 +122,8 @@
     "operational_use_enabled",
     "filing_enabled",
     "status",
-    "items"
+    "items",
+    "aircraft_capability"
   ],
   "type": "object"
 }

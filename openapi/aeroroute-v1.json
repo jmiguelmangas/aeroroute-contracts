@@ -1,6 +1,61 @@
 {
   "components": {
     "schemas": {
+      "AircraftCapabilityProfile": {
+        "properties": {
+          "aircraft_type": {
+            "title": "Aircraft Type",
+            "type": "string"
+          },
+          "allowed_equipment": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Allowed Equipment",
+            "type": "array"
+          },
+          "blockers": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Blockers",
+            "type": "array"
+          },
+          "capability_baseline": {
+            "title": "Capability Baseline",
+            "type": "string"
+          },
+          "operator_approval_status": {
+            "default": "missing",
+            "enum": [
+              "missing",
+              "accepted"
+            ],
+            "title": "Operator Approval Status",
+            "type": "string"
+          },
+          "requested_equipment": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Requested Equipment",
+            "type": "array"
+          },
+          "unsupported_equipment": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Unsupported Equipment",
+            "type": "array"
+          }
+        },
+        "required": [
+          "aircraft_type",
+          "capability_baseline"
+        ],
+        "title": "AircraftCapabilityProfile",
+        "type": "object"
+      },
       "AirportPage": {
         "properties": {
           "items": {
@@ -1180,6 +1235,9 @@
       },
       "IcaoFplValidationResponse": {
         "properties": {
+          "aircraft_capability": {
+            "$ref": "#/components/schemas/AircraftCapabilityProfile"
+          },
           "baseline": {
             "default": "icao-fpl-validation-2026-07-09",
             "title": "Baseline",
@@ -1218,7 +1276,8 @@
         },
         "required": [
           "status",
-          "items"
+          "items",
+          "aircraft_capability"
         ],
         "title": "IcaoFplValidationResponse",
         "type": "object"
@@ -2874,7 +2933,7 @@
   },
   "info": {
     "title": "AeroRoute MLX API",
-    "version": "0.13.0"
+    "version": "0.14.0"
   },
   "openapi": "3.1.0",
   "paths": {
